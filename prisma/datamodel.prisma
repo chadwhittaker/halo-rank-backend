@@ -1,0 +1,31 @@
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}
+
+type User {
+  id: ID! @unique
+  username: String! @unique
+  password: String!
+  firstName: String
+  lastName: String
+  admin: Boolean! @default(value: false)
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission]
+  designs: [Design!]!
+}
+
+type Design {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  published: Boolean! @default(value: "false")
+  title: String!
+  content: String
+  author: User!
+}
