@@ -15,11 +15,15 @@ var models = [
   {
     name: "Design",
     embedded: false
+  },
+  {
+    name: "Load",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://us1.prisma.sh/chad-whittaker-3eb7f4/AEG-solar-backend/dev`
+  endpoint: `https://us1.prisma.sh/aeg-solar/aeg-solar-service/dev`
 });
 exports.prisma = new exports.Prisma();

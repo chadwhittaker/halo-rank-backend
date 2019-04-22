@@ -19,6 +19,25 @@ type Mutation {
   signup(username: String!, password: String!): User!
   login(username: String!, password: String!): User!
   logout: SuccessMessage
+  createDesign(
+    deanery: String!, 
+    location: String!, 
+    parish: String!,
+    longitude: Float,
+    longitudeDir: String,
+    latitude: Float,
+    latitudeDir: String,
+    gridTied: String,
+    generator: String,
+    voltage: String,
+    freq: String,
+    phase: String,
+    area_roof: Float,
+    area_ground: Float,
+    loads: [LoadCreateWithoutDesignInput!]!,
+  ): Design!
+  updatePermissions(permissions: [Permission], userId: ID!): User
+
   # hello: String
   # createDraft(title: String!, content: String): Post!
   # deletePost(id: ID!): Post

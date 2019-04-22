@@ -43,6 +43,25 @@ server.express.use((req, res, next) => {
   next();
 });
 
+// middleware to populate the user on each request
+server.express.use(async (req, res, next) => {
+  // if they aren't logged in skip this
+  if(!req.userId) return next();
+
+  // on return a few details from the User
+  const fragment = `
+    fragment UserMinimal on User {
+      id
+      username
+      permissions
+    }
+  `
+
+  const user = await prisma.user({ id: req.userId }).$fragment(fragment);
+  req.user = user;
+  next();
+})
+
 
 server.start(
   {

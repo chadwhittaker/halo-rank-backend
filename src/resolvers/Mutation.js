@@ -1,10 +1,10 @@
 const { hash, compare } = require('bcrypt')
 const { sign } = require('jsonwebtoken')
-const { APP_SECRET, getUserId } = require('../utils')
+const { APP_SECRET, hasPermission } = require('../utils')
 
 const Mutation = {
 
-  signup: async (parent, { username, password }, context) => {
+  async signup (parent, { username, password }, context)  {
     // 1. lowercase their username
     const usernameLower = username.toLowerCase();
     // 2. hash their password
@@ -27,7 +27,7 @@ const Mutation = {
     return user;
   },
 
-  login: async (parent, { username, password }, context) => {
+  async login (parent, { username, password }, context) {
     // 1. check if there is a user with that username
     const user = await context.prisma.user({ username })
     if (!user) {
@@ -50,9 +50,73 @@ const Mutation = {
     return user;
   },
 
-  logout: async (parent, args, context) => {
+  async logout (parent, args, context) {
     context.response.clearCookie('token');
     return { message: 'Goodbye!' }
+  },
+
+  async createDesign (parent, args, context) {
+    // 1. check if user is logged in
+    if(!context.request.userId) {
+      throw new Error('You must be logged in to do that!');
+    }
+    // 2. check if he user has permission to do this
+    const currentUser = context.request.user;
+    hasPermission(currentUser, ['ADMIN', 'DESIGNCREATE'])
+    // 3. create design in database
+    const design = await context.prisma.createDesign(
+      {
+        // this is how we create a relationship
+        author: {
+          connect: {
+            id: context.request.userId
+          }
+        },
+        // create Loads and Connect at the same time
+        loads: {
+          create: [...args.loads]
+        },
+        deanery: args.deanery,
+        location: args.location,
+        parish: args.parish,
+        longitude: args.longitude,
+        longitudeDir: args.longitudeDir,
+        latitude: args.latitude,
+        latitudeDir: args.latitudeDir,
+        gridTied: args.gridTied,
+        generator: args.generator,
+        voltage: args.voltage,
+        freq: args.freq,
+        phase: args.phase,
+        area_roof: args.area_roof,
+        area_ground: args.area_ground,
+      }
+    );
+    // 3. return the design
+    return design;
+  }, 
+
+  async updatePermissions (parent, args, context) {
+    // 1. check if they are logged in
+    if(!context.request.userId) {
+      throw new Error('You must be logged in!')
+    }
+    // 2. query the current user
+    const currentUser = context.request.user;
+    // 3. check if they have permissions to do this
+    hasPermission(currentUser, ['ADMIN', 'PERMISSIONUPDATE'])
+    // 4. update the permissions
+    const user = await context.prisma.updateUser({
+      data: {
+        permissions: {
+          set: args.permissions
+        }
+      },
+      where: {
+        id: args.userId
+      }
+    })
+    return user;
   }
 
 

@@ -1,8 +1,8 @@
-const { getUserId } = require('../utils')
+const { hasPermission } = require('../utils')
 
 const Query = {
 
-  me: (parent, args, context) => {
+  me (parent, args, context) {
     // check if their is a current userId on the request (remember...we added the decoded userId in middleware)
     if (!context.request.userId) {
       // don't throw an error, just return nothing. It's ok not to be logged in
@@ -12,7 +12,7 @@ const Query = {
     return context.prisma.user({ id: context.request.userId })
   },
 
-  user: (parent, args, context) => {
+  user (parent, args, context) {
     return context.prisma.user(
       {
         id: args.id,
@@ -21,7 +21,15 @@ const Query = {
     )
   },
 
-  users: (parent, args, context) => {
+  async users (parent, args, context) {
+    // 1. check if they are logged in
+    if (!context.request.userId) {
+      throw new Error ('You must be logged in to do that!')
+    }
+    // 2. check if the user has the permissions to query all users
+    hasPermission(context.request.user, ['ADMIN', 'PERMISSIONUPDATE']);
+    
+    // 3 if they do, query all the users
     return context.prisma.users()
   },
 

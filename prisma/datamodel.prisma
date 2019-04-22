@@ -1,14 +1,14 @@
 enum Permission {
   ADMIN
   USER
-  ITEMCREATE
-  ITEMUPDATE
-  ITEMDELETE
+  DESIGNCREATE
+  DESIGNUPDATE
+  DESIGNDELETE
   PERMISSIONUPDATE
 }
 
 type User {
-  id: ID! @unique
+  id: ID! @unique @id
   username: String! @unique
   password: String!
   firstName: String
@@ -16,16 +16,41 @@ type User {
   admin: Boolean! @default(value: false)
   resetToken: String
   resetTokenExpiry: Float
-  permissions: [Permission]
-  designs: [Design!]!
+  permissions: [Permission] @scalarList(strategy: RELATION)
+  designs: [Design]!
 }
 
 type Design {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  published: Boolean! @default(value: "false")
-  title: String!
-  content: String
+  id: ID! @unique @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  modified: Boolean! @default(value: false)
   author: User!
+  deanery: String!
+  location: String!
+  parish: String!
+  longitude: Float
+  longitudeDir: String
+  latitude: Float
+  latitudeDir: String
+  gridTied: String
+  generator: String
+  voltage: String
+  freq: String
+  phase: String
+  area_roof: Float
+  area_ground: Float
+  loads: [Load!]!
+}
+
+type Load {
+  id: ID! @unique @id
+  name: String
+  quantity: Float!
+  power: Float!
+  dayUsage: Float!
+  nightUsage: Float!
+  usageDays: Float!
+  surgeMult: Float!
+  design: Design!
 }
