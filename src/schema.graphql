@@ -1,6 +1,6 @@
 # defines my Client-Facing GraphQL Queries and Mutations
 
-# import * from './generated/graphql-schema/prisma.graphql'
+# import * from './generated/prisma.graphql'
 
 scalar DateTime
 
@@ -8,6 +8,8 @@ type Query {
   me: User
   user(id: ID, username: String): User
   users: [User]!
+  designs: [Design]!
+  design(id: ID): Design
 
   # me: User
   # feed: [Post!]!
@@ -16,7 +18,7 @@ type Query {
 }
 
 type Mutation {
-  signup(username: String!, password: String!): User!
+  signup(username: String!, password: String!, firstName: String!, lastName: String): User!
   login(username: String!, password: String!): User!
   logout: SuccessMessage
   createDesign(
@@ -32,9 +34,27 @@ type Mutation {
     voltage: String,
     freq: String,
     phase: String,
-    area_roof: Float,
-    area_ground: Float,
+    area_roof: Int,
+    area_ground: Int,
     loads: [LoadCreateWithoutDesignInput!]!,
+  ): Design!
+  updateDesign(
+    id: ID!,
+    deanery: String,
+    location: String, 
+    parish: String,
+    longitude: Float,
+    longitudeDir: String,
+    latitude: Float,
+    latitudeDir: String,
+    gridTied: String,
+    generator: String,
+    voltage: String,
+    freq: String,
+    phase: String,
+    area_roof: Int,
+    area_ground: Int,
+    loads: [LoadCreateWithoutDesignInput],
   ): Design!
   updatePermissions(permissions: [Permission], userId: ID!): User
 

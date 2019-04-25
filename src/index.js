@@ -3,20 +3,21 @@ const { APP_SECRET } = require('./utils');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const { GraphQLServer } = require('graphql-yoga');
-const { prisma } = require('./generated/prisma-client');
+const db = require('./db');
 const { resolvers } = require('./resolvers');
-const { permissions } = require('./permissions');
-
 
 // define the GraphQL server
 const server = new GraphQLServer({
   typeDefs: 'src/schema.graphql',
   resolvers,
+  resolverValidationOptions: {
+    requireResolversForResolveType: false,
+  },
   // middlewares: [permissions],
-  context: request => {
+  context: req => {
     return {
-      ...request,
-      prisma,
+      ...req,
+      db,
     }
   },
 })
@@ -45,22 +46,15 @@ server.express.use((req, res, next) => {
 
 // middleware to populate the user on each request
 server.express.use(async (req, res, next) => {
-  // if they aren't logged in skip this
-  if(!req.userId) return next();
-
-  // on return a few details from the User
-  const fragment = `
-    fragment UserMinimal on User {
-      id
-      username
-      permissions
-    }
-  `
-
-  const user = await prisma.user({ id: req.userId }).$fragment(fragment);
+  // if they aren't logged in, skip this
+  if (!req.userId) return next();
+  const user = await db.query.user(
+    { where: { id: req.userId } },
+    '{ id, username, permissions }'
+  );
   req.user = user;
   next();
-})
+});
 
 
 server.start(

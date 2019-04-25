@@ -2,52 +2,70 @@ const { hasPermission } = require('../utils')
 
 const Query = {
 
-  me (parent, args, context) {
+  me(parent, args, ctx, info) {
     // check if their is a current userId on the request (remember...we added the decoded userId in middleware)
-    if (!context.request.userId) {
+    if (!ctx.request.userId) {
       // don't throw an error, just return nothing. It's ok not to be logged in
       return null;
     }
     // if there is a userId on the request...query it in the database and return to client
-    return context.prisma.user({ id: context.request.userId })
-  },
-
-  user (parent, args, context) {
-    return context.prisma.user(
+    return ctx.db.query.user(
       {
-        id: args.id,
-        username: args.username
-      },
-    )
+        where: { id: ctx.request.userId },
+      }, info)
   },
 
-  async users (parent, args, context) {
+  user(parent, args, ctx, info) {
+    return ctx.db.query.user(
+      {
+        where: {
+          id: args.id,
+          username: args.username
+        },
+      }, info)
+  },
+
+  async users(parent, args, ctx, info) {
     // 1. check if they are logged in
-    if (!context.request.userId) {
+    if (!ctx.request.userId) {
       throw new Error ('You must be logged in to do that!')
     }
     // 2. check if the user has the permissions to query all users
-    hasPermission(context.request.user, ['ADMIN', 'PERMISSIONUPDATE']);
-    
+    hasPermission(ctx.request.user, ['ADMIN', 'PERMISSIONUPDATE']);
+
     // 3 if they do, query all the users
-    return context.prisma.users()
+    return ctx.db.query.users({}, info)
   },
 
+  async designs(parent, args, ctx, info) {
+    return ctx.db.query.designs({}, info)
+  },
+
+  async design(parent, args, ctx, info) {
+    return ctx.db.query.design(
+      {
+        where: { id: args.id }
+      }, info)
+  }
 
 
 
-  // hello: (parent, args, context) => {
-  //       return context.prisma.users()
+
+
+
+
+  // hello: (parent, args, ctx) => {
+  //       return ctx.db.query.users()
   //     },
-  //   me: (parent, args, context) => {
-  //     const userId = getUserId(context)
-  //     return context.prisma.user({ id: userId })
+  //   me: (parent, args, ctx) => {
+  //     const userId = getUserId(ctx)
+  //     return ctx.db.query.user({ id: userId })
   //   },
-  //   feed: (parent, args, context) => {
-  //     return context.prisma.posts({ where: { published: true } })
+  //   feed: (parent, args, ctx) => {
+  //     return ctx.db.query.posts({ where: { published: true } })
   //   },
-  //   filterPosts: (parent, { searchString }, context) => {
-  //     return context.prisma.posts({
+  //   filterPosts: (parent, { searchString }, ctx) => {
+  //     return ctx.db.query.posts({
   //       where: {
   //         OR: [
   //           {
@@ -60,8 +78,8 @@ const Query = {
   //       },
   //     })
   //   },
-  //   post: (parent, { id }, context) => {
-  //     return context.prisma.post({ id })
+  //   post: (parent, { id }, ctx) => {
+  //     return ctx.db.query.post({ id })
   //   },
 }
 

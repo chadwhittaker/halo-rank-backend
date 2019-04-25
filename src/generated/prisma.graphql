@@ -34,9 +34,25 @@ type Design {
   voltage: String
   freq: String
   phase: String
-  area_roof: Float
-  area_ground: Float
+  area_roof: Int
+  area_ground: Int
   loads(where: LoadWhereInput, orderBy: LoadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Load!]
+  dayLoad: Float
+  nightLoad: Float
+  fullLoad: Float
+  param_autoHours: Float!
+  param_crit: Boolean!
+  param_loadPercent: Float!
+  param_condEff: Float!
+  param_maxDoD: Float!
+  param_maxPowerMarkdown: Float!
+  param_solarEff: Float!
+  param_surgeMarkup: Float!
+  battery: String
+  charger: String
+  inverter: String
+  cost: Int
+  output_pv: Float
 }
 
 type DesignConnection {
@@ -61,9 +77,25 @@ input DesignCreateInput {
   voltage: String
   freq: String
   phase: String
-  area_roof: Float
-  area_ground: Float
+  area_roof: Int
+  area_ground: Int
   loads: LoadCreateManyWithoutDesignInput
+  dayLoad: Float
+  nightLoad: Float
+  fullLoad: Float
+  param_autoHours: Float
+  param_crit: Boolean
+  param_loadPercent: Float
+  param_condEff: Float
+  param_maxDoD: Float
+  param_maxPowerMarkdown: Float
+  param_solarEff: Float
+  param_surgeMarkup: Float
+  battery: String
+  charger: String
+  inverter: String
+  cost: Int
+  output_pv: Float
 }
 
 input DesignCreateManyWithoutAuthorInput {
@@ -91,9 +123,25 @@ input DesignCreateWithoutAuthorInput {
   voltage: String
   freq: String
   phase: String
-  area_roof: Float
-  area_ground: Float
+  area_roof: Int
+  area_ground: Int
   loads: LoadCreateManyWithoutDesignInput
+  dayLoad: Float
+  nightLoad: Float
+  fullLoad: Float
+  param_autoHours: Float
+  param_crit: Boolean
+  param_loadPercent: Float
+  param_condEff: Float
+  param_maxDoD: Float
+  param_maxPowerMarkdown: Float
+  param_solarEff: Float
+  param_surgeMarkup: Float
+  battery: String
+  charger: String
+  inverter: String
+  cost: Int
+  output_pv: Float
 }
 
 input DesignCreateWithoutLoadsInput {
@@ -112,8 +160,24 @@ input DesignCreateWithoutLoadsInput {
   voltage: String
   freq: String
   phase: String
-  area_roof: Float
-  area_ground: Float
+  area_roof: Int
+  area_ground: Int
+  dayLoad: Float
+  nightLoad: Float
+  fullLoad: Float
+  param_autoHours: Float
+  param_crit: Boolean
+  param_loadPercent: Float
+  param_condEff: Float
+  param_maxDoD: Float
+  param_maxPowerMarkdown: Float
+  param_solarEff: Float
+  param_surgeMarkup: Float
+  battery: String
+  charger: String
+  inverter: String
+  cost: Int
+  output_pv: Float
 }
 
 type DesignEdge {
@@ -158,6 +222,38 @@ enum DesignOrderByInput {
   area_roof_DESC
   area_ground_ASC
   area_ground_DESC
+  dayLoad_ASC
+  dayLoad_DESC
+  nightLoad_ASC
+  nightLoad_DESC
+  fullLoad_ASC
+  fullLoad_DESC
+  param_autoHours_ASC
+  param_autoHours_DESC
+  param_crit_ASC
+  param_crit_DESC
+  param_loadPercent_ASC
+  param_loadPercent_DESC
+  param_condEff_ASC
+  param_condEff_DESC
+  param_maxDoD_ASC
+  param_maxDoD_DESC
+  param_maxPowerMarkdown_ASC
+  param_maxPowerMarkdown_DESC
+  param_solarEff_ASC
+  param_solarEff_DESC
+  param_surgeMarkup_ASC
+  param_surgeMarkup_DESC
+  battery_ASC
+  battery_DESC
+  charger_ASC
+  charger_DESC
+  inverter_ASC
+  inverter_DESC
+  cost_ASC
+  cost_DESC
+  output_pv_ASC
+  output_pv_DESC
 }
 
 type DesignPreviousValues {
@@ -177,8 +273,24 @@ type DesignPreviousValues {
   voltage: String
   freq: String
   phase: String
-  area_roof: Float
-  area_ground: Float
+  area_roof: Int
+  area_ground: Int
+  dayLoad: Float
+  nightLoad: Float
+  fullLoad: Float
+  param_autoHours: Float!
+  param_crit: Boolean!
+  param_loadPercent: Float!
+  param_condEff: Float!
+  param_maxDoD: Float!
+  param_maxPowerMarkdown: Float!
+  param_solarEff: Float!
+  param_surgeMarkup: Float!
+  battery: String
+  charger: String
+  inverter: String
+  cost: Int
+  output_pv: Float
 }
 
 input DesignScalarWhereInput {
@@ -370,22 +482,162 @@ input DesignScalarWhereInput {
   phase_not_starts_with: String
   phase_ends_with: String
   phase_not_ends_with: String
-  area_roof: Float
-  area_roof_not: Float
-  area_roof_in: [Float!]
-  area_roof_not_in: [Float!]
-  area_roof_lt: Float
-  area_roof_lte: Float
-  area_roof_gt: Float
-  area_roof_gte: Float
-  area_ground: Float
-  area_ground_not: Float
-  area_ground_in: [Float!]
-  area_ground_not_in: [Float!]
-  area_ground_lt: Float
-  area_ground_lte: Float
-  area_ground_gt: Float
-  area_ground_gte: Float
+  area_roof: Int
+  area_roof_not: Int
+  area_roof_in: [Int!]
+  area_roof_not_in: [Int!]
+  area_roof_lt: Int
+  area_roof_lte: Int
+  area_roof_gt: Int
+  area_roof_gte: Int
+  area_ground: Int
+  area_ground_not: Int
+  area_ground_in: [Int!]
+  area_ground_not_in: [Int!]
+  area_ground_lt: Int
+  area_ground_lte: Int
+  area_ground_gt: Int
+  area_ground_gte: Int
+  dayLoad: Float
+  dayLoad_not: Float
+  dayLoad_in: [Float!]
+  dayLoad_not_in: [Float!]
+  dayLoad_lt: Float
+  dayLoad_lte: Float
+  dayLoad_gt: Float
+  dayLoad_gte: Float
+  nightLoad: Float
+  nightLoad_not: Float
+  nightLoad_in: [Float!]
+  nightLoad_not_in: [Float!]
+  nightLoad_lt: Float
+  nightLoad_lte: Float
+  nightLoad_gt: Float
+  nightLoad_gte: Float
+  fullLoad: Float
+  fullLoad_not: Float
+  fullLoad_in: [Float!]
+  fullLoad_not_in: [Float!]
+  fullLoad_lt: Float
+  fullLoad_lte: Float
+  fullLoad_gt: Float
+  fullLoad_gte: Float
+  param_autoHours: Float
+  param_autoHours_not: Float
+  param_autoHours_in: [Float!]
+  param_autoHours_not_in: [Float!]
+  param_autoHours_lt: Float
+  param_autoHours_lte: Float
+  param_autoHours_gt: Float
+  param_autoHours_gte: Float
+  param_crit: Boolean
+  param_crit_not: Boolean
+  param_loadPercent: Float
+  param_loadPercent_not: Float
+  param_loadPercent_in: [Float!]
+  param_loadPercent_not_in: [Float!]
+  param_loadPercent_lt: Float
+  param_loadPercent_lte: Float
+  param_loadPercent_gt: Float
+  param_loadPercent_gte: Float
+  param_condEff: Float
+  param_condEff_not: Float
+  param_condEff_in: [Float!]
+  param_condEff_not_in: [Float!]
+  param_condEff_lt: Float
+  param_condEff_lte: Float
+  param_condEff_gt: Float
+  param_condEff_gte: Float
+  param_maxDoD: Float
+  param_maxDoD_not: Float
+  param_maxDoD_in: [Float!]
+  param_maxDoD_not_in: [Float!]
+  param_maxDoD_lt: Float
+  param_maxDoD_lte: Float
+  param_maxDoD_gt: Float
+  param_maxDoD_gte: Float
+  param_maxPowerMarkdown: Float
+  param_maxPowerMarkdown_not: Float
+  param_maxPowerMarkdown_in: [Float!]
+  param_maxPowerMarkdown_not_in: [Float!]
+  param_maxPowerMarkdown_lt: Float
+  param_maxPowerMarkdown_lte: Float
+  param_maxPowerMarkdown_gt: Float
+  param_maxPowerMarkdown_gte: Float
+  param_solarEff: Float
+  param_solarEff_not: Float
+  param_solarEff_in: [Float!]
+  param_solarEff_not_in: [Float!]
+  param_solarEff_lt: Float
+  param_solarEff_lte: Float
+  param_solarEff_gt: Float
+  param_solarEff_gte: Float
+  param_surgeMarkup: Float
+  param_surgeMarkup_not: Float
+  param_surgeMarkup_in: [Float!]
+  param_surgeMarkup_not_in: [Float!]
+  param_surgeMarkup_lt: Float
+  param_surgeMarkup_lte: Float
+  param_surgeMarkup_gt: Float
+  param_surgeMarkup_gte: Float
+  battery: String
+  battery_not: String
+  battery_in: [String!]
+  battery_not_in: [String!]
+  battery_lt: String
+  battery_lte: String
+  battery_gt: String
+  battery_gte: String
+  battery_contains: String
+  battery_not_contains: String
+  battery_starts_with: String
+  battery_not_starts_with: String
+  battery_ends_with: String
+  battery_not_ends_with: String
+  charger: String
+  charger_not: String
+  charger_in: [String!]
+  charger_not_in: [String!]
+  charger_lt: String
+  charger_lte: String
+  charger_gt: String
+  charger_gte: String
+  charger_contains: String
+  charger_not_contains: String
+  charger_starts_with: String
+  charger_not_starts_with: String
+  charger_ends_with: String
+  charger_not_ends_with: String
+  inverter: String
+  inverter_not: String
+  inverter_in: [String!]
+  inverter_not_in: [String!]
+  inverter_lt: String
+  inverter_lte: String
+  inverter_gt: String
+  inverter_gte: String
+  inverter_contains: String
+  inverter_not_contains: String
+  inverter_starts_with: String
+  inverter_not_starts_with: String
+  inverter_ends_with: String
+  inverter_not_ends_with: String
+  cost: Int
+  cost_not: Int
+  cost_in: [Int!]
+  cost_not_in: [Int!]
+  cost_lt: Int
+  cost_lte: Int
+  cost_gt: Int
+  cost_gte: Int
+  output_pv: Float
+  output_pv_not: Float
+  output_pv_in: [Float!]
+  output_pv_not_in: [Float!]
+  output_pv_lt: Float
+  output_pv_lte: Float
+  output_pv_gt: Float
+  output_pv_gte: Float
   AND: [DesignScalarWhereInput!]
   OR: [DesignScalarWhereInput!]
   NOT: [DesignScalarWhereInput!]
@@ -424,9 +676,25 @@ input DesignUpdateInput {
   voltage: String
   freq: String
   phase: String
-  area_roof: Float
-  area_ground: Float
+  area_roof: Int
+  area_ground: Int
   loads: LoadUpdateManyWithoutDesignInput
+  dayLoad: Float
+  nightLoad: Float
+  fullLoad: Float
+  param_autoHours: Float
+  param_crit: Boolean
+  param_loadPercent: Float
+  param_condEff: Float
+  param_maxDoD: Float
+  param_maxPowerMarkdown: Float
+  param_solarEff: Float
+  param_surgeMarkup: Float
+  battery: String
+  charger: String
+  inverter: String
+  cost: Int
+  output_pv: Float
 }
 
 input DesignUpdateManyDataInput {
@@ -443,8 +711,24 @@ input DesignUpdateManyDataInput {
   voltage: String
   freq: String
   phase: String
-  area_roof: Float
-  area_ground: Float
+  area_roof: Int
+  area_ground: Int
+  dayLoad: Float
+  nightLoad: Float
+  fullLoad: Float
+  param_autoHours: Float
+  param_crit: Boolean
+  param_loadPercent: Float
+  param_condEff: Float
+  param_maxDoD: Float
+  param_maxPowerMarkdown: Float
+  param_solarEff: Float
+  param_surgeMarkup: Float
+  battery: String
+  charger: String
+  inverter: String
+  cost: Int
+  output_pv: Float
 }
 
 input DesignUpdateManyMutationInput {
@@ -461,8 +745,24 @@ input DesignUpdateManyMutationInput {
   voltage: String
   freq: String
   phase: String
-  area_roof: Float
-  area_ground: Float
+  area_roof: Int
+  area_ground: Int
+  dayLoad: Float
+  nightLoad: Float
+  fullLoad: Float
+  param_autoHours: Float
+  param_crit: Boolean
+  param_loadPercent: Float
+  param_condEff: Float
+  param_maxDoD: Float
+  param_maxPowerMarkdown: Float
+  param_solarEff: Float
+  param_surgeMarkup: Float
+  battery: String
+  charger: String
+  inverter: String
+  cost: Int
+  output_pv: Float
 }
 
 input DesignUpdateManyWithoutAuthorInput {
@@ -503,9 +803,25 @@ input DesignUpdateWithoutAuthorDataInput {
   voltage: String
   freq: String
   phase: String
-  area_roof: Float
-  area_ground: Float
+  area_roof: Int
+  area_ground: Int
   loads: LoadUpdateManyWithoutDesignInput
+  dayLoad: Float
+  nightLoad: Float
+  fullLoad: Float
+  param_autoHours: Float
+  param_crit: Boolean
+  param_loadPercent: Float
+  param_condEff: Float
+  param_maxDoD: Float
+  param_maxPowerMarkdown: Float
+  param_solarEff: Float
+  param_surgeMarkup: Float
+  battery: String
+  charger: String
+  inverter: String
+  cost: Int
+  output_pv: Float
 }
 
 input DesignUpdateWithoutLoadsDataInput {
@@ -523,8 +839,24 @@ input DesignUpdateWithoutLoadsDataInput {
   voltage: String
   freq: String
   phase: String
-  area_roof: Float
-  area_ground: Float
+  area_roof: Int
+  area_ground: Int
+  dayLoad: Float
+  nightLoad: Float
+  fullLoad: Float
+  param_autoHours: Float
+  param_crit: Boolean
+  param_loadPercent: Float
+  param_condEff: Float
+  param_maxDoD: Float
+  param_maxPowerMarkdown: Float
+  param_solarEff: Float
+  param_surgeMarkup: Float
+  battery: String
+  charger: String
+  inverter: String
+  cost: Int
+  output_pv: Float
 }
 
 input DesignUpdateWithWhereUniqueWithoutAuthorInput {
@@ -733,25 +1065,165 @@ input DesignWhereInput {
   phase_not_starts_with: String
   phase_ends_with: String
   phase_not_ends_with: String
-  area_roof: Float
-  area_roof_not: Float
-  area_roof_in: [Float!]
-  area_roof_not_in: [Float!]
-  area_roof_lt: Float
-  area_roof_lte: Float
-  area_roof_gt: Float
-  area_roof_gte: Float
-  area_ground: Float
-  area_ground_not: Float
-  area_ground_in: [Float!]
-  area_ground_not_in: [Float!]
-  area_ground_lt: Float
-  area_ground_lte: Float
-  area_ground_gt: Float
-  area_ground_gte: Float
+  area_roof: Int
+  area_roof_not: Int
+  area_roof_in: [Int!]
+  area_roof_not_in: [Int!]
+  area_roof_lt: Int
+  area_roof_lte: Int
+  area_roof_gt: Int
+  area_roof_gte: Int
+  area_ground: Int
+  area_ground_not: Int
+  area_ground_in: [Int!]
+  area_ground_not_in: [Int!]
+  area_ground_lt: Int
+  area_ground_lte: Int
+  area_ground_gt: Int
+  area_ground_gte: Int
   loads_every: LoadWhereInput
   loads_some: LoadWhereInput
   loads_none: LoadWhereInput
+  dayLoad: Float
+  dayLoad_not: Float
+  dayLoad_in: [Float!]
+  dayLoad_not_in: [Float!]
+  dayLoad_lt: Float
+  dayLoad_lte: Float
+  dayLoad_gt: Float
+  dayLoad_gte: Float
+  nightLoad: Float
+  nightLoad_not: Float
+  nightLoad_in: [Float!]
+  nightLoad_not_in: [Float!]
+  nightLoad_lt: Float
+  nightLoad_lte: Float
+  nightLoad_gt: Float
+  nightLoad_gte: Float
+  fullLoad: Float
+  fullLoad_not: Float
+  fullLoad_in: [Float!]
+  fullLoad_not_in: [Float!]
+  fullLoad_lt: Float
+  fullLoad_lte: Float
+  fullLoad_gt: Float
+  fullLoad_gte: Float
+  param_autoHours: Float
+  param_autoHours_not: Float
+  param_autoHours_in: [Float!]
+  param_autoHours_not_in: [Float!]
+  param_autoHours_lt: Float
+  param_autoHours_lte: Float
+  param_autoHours_gt: Float
+  param_autoHours_gte: Float
+  param_crit: Boolean
+  param_crit_not: Boolean
+  param_loadPercent: Float
+  param_loadPercent_not: Float
+  param_loadPercent_in: [Float!]
+  param_loadPercent_not_in: [Float!]
+  param_loadPercent_lt: Float
+  param_loadPercent_lte: Float
+  param_loadPercent_gt: Float
+  param_loadPercent_gte: Float
+  param_condEff: Float
+  param_condEff_not: Float
+  param_condEff_in: [Float!]
+  param_condEff_not_in: [Float!]
+  param_condEff_lt: Float
+  param_condEff_lte: Float
+  param_condEff_gt: Float
+  param_condEff_gte: Float
+  param_maxDoD: Float
+  param_maxDoD_not: Float
+  param_maxDoD_in: [Float!]
+  param_maxDoD_not_in: [Float!]
+  param_maxDoD_lt: Float
+  param_maxDoD_lte: Float
+  param_maxDoD_gt: Float
+  param_maxDoD_gte: Float
+  param_maxPowerMarkdown: Float
+  param_maxPowerMarkdown_not: Float
+  param_maxPowerMarkdown_in: [Float!]
+  param_maxPowerMarkdown_not_in: [Float!]
+  param_maxPowerMarkdown_lt: Float
+  param_maxPowerMarkdown_lte: Float
+  param_maxPowerMarkdown_gt: Float
+  param_maxPowerMarkdown_gte: Float
+  param_solarEff: Float
+  param_solarEff_not: Float
+  param_solarEff_in: [Float!]
+  param_solarEff_not_in: [Float!]
+  param_solarEff_lt: Float
+  param_solarEff_lte: Float
+  param_solarEff_gt: Float
+  param_solarEff_gte: Float
+  param_surgeMarkup: Float
+  param_surgeMarkup_not: Float
+  param_surgeMarkup_in: [Float!]
+  param_surgeMarkup_not_in: [Float!]
+  param_surgeMarkup_lt: Float
+  param_surgeMarkup_lte: Float
+  param_surgeMarkup_gt: Float
+  param_surgeMarkup_gte: Float
+  battery: String
+  battery_not: String
+  battery_in: [String!]
+  battery_not_in: [String!]
+  battery_lt: String
+  battery_lte: String
+  battery_gt: String
+  battery_gte: String
+  battery_contains: String
+  battery_not_contains: String
+  battery_starts_with: String
+  battery_not_starts_with: String
+  battery_ends_with: String
+  battery_not_ends_with: String
+  charger: String
+  charger_not: String
+  charger_in: [String!]
+  charger_not_in: [String!]
+  charger_lt: String
+  charger_lte: String
+  charger_gt: String
+  charger_gte: String
+  charger_contains: String
+  charger_not_contains: String
+  charger_starts_with: String
+  charger_not_starts_with: String
+  charger_ends_with: String
+  charger_not_ends_with: String
+  inverter: String
+  inverter_not: String
+  inverter_in: [String!]
+  inverter_not_in: [String!]
+  inverter_lt: String
+  inverter_lte: String
+  inverter_gt: String
+  inverter_gte: String
+  inverter_contains: String
+  inverter_not_contains: String
+  inverter_starts_with: String
+  inverter_not_starts_with: String
+  inverter_ends_with: String
+  inverter_not_ends_with: String
+  cost: Int
+  cost_not: Int
+  cost_in: [Int!]
+  cost_not_in: [Int!]
+  cost_lt: Int
+  cost_lte: Int
+  cost_gt: Int
+  cost_gte: Int
+  output_pv: Float
+  output_pv_not: Float
+  output_pv_in: [Float!]
+  output_pv_not_in: [Float!]
+  output_pv_lt: Float
+  output_pv_lte: Float
+  output_pv_gt: Float
+  output_pv_gte: Float
   AND: [DesignWhereInput!]
   OR: [DesignWhereInput!]
   NOT: [DesignWhereInput!]
@@ -1170,7 +1642,7 @@ type User {
   id: ID!
   username: String!
   password: String!
-  firstName: String
+  firstName: String!
   lastName: String
   admin: Boolean!
   resetToken: String
@@ -1189,7 +1661,7 @@ input UserCreateInput {
   id: ID
   username: String!
   password: String!
-  firstName: String
+  firstName: String!
   lastName: String
   admin: Boolean
   resetToken: String
@@ -1211,7 +1683,7 @@ input UserCreateWithoutDesignsInput {
   id: ID
   username: String!
   password: String!
-  firstName: String
+  firstName: String!
   lastName: String
   admin: Boolean
   resetToken: String
@@ -1247,7 +1719,7 @@ type UserPreviousValues {
   id: ID!
   username: String!
   password: String!
-  firstName: String
+  firstName: String!
   lastName: String
   admin: Boolean!
   resetToken: String
