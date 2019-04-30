@@ -36,13 +36,13 @@ type Design {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean
+  autoHours: Float!
   loads(where: LoadWhereInput, orderBy: LoadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Load!]
   dayLoad: Float
   nightLoad: Float
   fullLoad: Float
-  param_autoHours: Float!
   param_crit: Boolean!
-  param_loadPercent: Float!
   param_condEff: Float!
   param_maxDoD: Float!
   param_maxPowerMarkdown: Float!
@@ -79,13 +79,13 @@ input DesignCreateInput {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean
+  autoHours: Float
   loads: LoadCreateManyWithoutDesignInput
   dayLoad: Float
   nightLoad: Float
   fullLoad: Float
-  param_autoHours: Float
   param_crit: Boolean
-  param_loadPercent: Float
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
@@ -125,13 +125,13 @@ input DesignCreateWithoutAuthorInput {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean
+  autoHours: Float
   loads: LoadCreateManyWithoutDesignInput
   dayLoad: Float
   nightLoad: Float
   fullLoad: Float
-  param_autoHours: Float
   param_crit: Boolean
-  param_loadPercent: Float
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
@@ -162,12 +162,12 @@ input DesignCreateWithoutLoadsInput {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean
+  autoHours: Float
   dayLoad: Float
   nightLoad: Float
   fullLoad: Float
-  param_autoHours: Float
   param_crit: Boolean
-  param_loadPercent: Float
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
@@ -222,18 +222,18 @@ enum DesignOrderByInput {
   area_roof_DESC
   area_ground_ASC
   area_ground_DESC
+  batteryBackup_ASC
+  batteryBackup_DESC
+  autoHours_ASC
+  autoHours_DESC
   dayLoad_ASC
   dayLoad_DESC
   nightLoad_ASC
   nightLoad_DESC
   fullLoad_ASC
   fullLoad_DESC
-  param_autoHours_ASC
-  param_autoHours_DESC
   param_crit_ASC
   param_crit_DESC
-  param_loadPercent_ASC
-  param_loadPercent_DESC
   param_condEff_ASC
   param_condEff_DESC
   param_maxDoD_ASC
@@ -275,12 +275,12 @@ type DesignPreviousValues {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean
+  autoHours: Float!
   dayLoad: Float
   nightLoad: Float
   fullLoad: Float
-  param_autoHours: Float!
   param_crit: Boolean!
-  param_loadPercent: Float!
   param_condEff: Float!
   param_maxDoD: Float!
   param_maxPowerMarkdown: Float!
@@ -498,6 +498,16 @@ input DesignScalarWhereInput {
   area_ground_lte: Int
   area_ground_gt: Int
   area_ground_gte: Int
+  batteryBackup: Boolean
+  batteryBackup_not: Boolean
+  autoHours: Float
+  autoHours_not: Float
+  autoHours_in: [Float!]
+  autoHours_not_in: [Float!]
+  autoHours_lt: Float
+  autoHours_lte: Float
+  autoHours_gt: Float
+  autoHours_gte: Float
   dayLoad: Float
   dayLoad_not: Float
   dayLoad_in: [Float!]
@@ -522,24 +532,8 @@ input DesignScalarWhereInput {
   fullLoad_lte: Float
   fullLoad_gt: Float
   fullLoad_gte: Float
-  param_autoHours: Float
-  param_autoHours_not: Float
-  param_autoHours_in: [Float!]
-  param_autoHours_not_in: [Float!]
-  param_autoHours_lt: Float
-  param_autoHours_lte: Float
-  param_autoHours_gt: Float
-  param_autoHours_gte: Float
   param_crit: Boolean
   param_crit_not: Boolean
-  param_loadPercent: Float
-  param_loadPercent_not: Float
-  param_loadPercent_in: [Float!]
-  param_loadPercent_not_in: [Float!]
-  param_loadPercent_lt: Float
-  param_loadPercent_lte: Float
-  param_loadPercent_gt: Float
-  param_loadPercent_gte: Float
   param_condEff: Float
   param_condEff_not: Float
   param_condEff_in: [Float!]
@@ -678,13 +672,13 @@ input DesignUpdateInput {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean
+  autoHours: Float
   loads: LoadUpdateManyWithoutDesignInput
   dayLoad: Float
   nightLoad: Float
   fullLoad: Float
-  param_autoHours: Float
   param_crit: Boolean
-  param_loadPercent: Float
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
@@ -713,12 +707,12 @@ input DesignUpdateManyDataInput {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean
+  autoHours: Float
   dayLoad: Float
   nightLoad: Float
   fullLoad: Float
-  param_autoHours: Float
   param_crit: Boolean
-  param_loadPercent: Float
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
@@ -747,12 +741,12 @@ input DesignUpdateManyMutationInput {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean
+  autoHours: Float
   dayLoad: Float
   nightLoad: Float
   fullLoad: Float
-  param_autoHours: Float
   param_crit: Boolean
-  param_loadPercent: Float
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
@@ -805,13 +799,13 @@ input DesignUpdateWithoutAuthorDataInput {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean
+  autoHours: Float
   loads: LoadUpdateManyWithoutDesignInput
   dayLoad: Float
   nightLoad: Float
   fullLoad: Float
-  param_autoHours: Float
   param_crit: Boolean
-  param_loadPercent: Float
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
@@ -841,12 +835,12 @@ input DesignUpdateWithoutLoadsDataInput {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean
+  autoHours: Float
   dayLoad: Float
   nightLoad: Float
   fullLoad: Float
-  param_autoHours: Float
   param_crit: Boolean
-  param_loadPercent: Float
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
@@ -1081,6 +1075,16 @@ input DesignWhereInput {
   area_ground_lte: Int
   area_ground_gt: Int
   area_ground_gte: Int
+  batteryBackup: Boolean
+  batteryBackup_not: Boolean
+  autoHours: Float
+  autoHours_not: Float
+  autoHours_in: [Float!]
+  autoHours_not_in: [Float!]
+  autoHours_lt: Float
+  autoHours_lte: Float
+  autoHours_gt: Float
+  autoHours_gte: Float
   loads_every: LoadWhereInput
   loads_some: LoadWhereInput
   loads_none: LoadWhereInput
@@ -1108,24 +1112,8 @@ input DesignWhereInput {
   fullLoad_lte: Float
   fullLoad_gt: Float
   fullLoad_gte: Float
-  param_autoHours: Float
-  param_autoHours_not: Float
-  param_autoHours_in: [Float!]
-  param_autoHours_not_in: [Float!]
-  param_autoHours_lt: Float
-  param_autoHours_lte: Float
-  param_autoHours_gt: Float
-  param_autoHours_gte: Float
   param_crit: Boolean
   param_crit_not: Boolean
-  param_loadPercent: Float
-  param_loadPercent_not: Float
-  param_loadPercent_in: [Float!]
-  param_loadPercent_not_in: [Float!]
-  param_loadPercent_lt: Float
-  param_loadPercent_lte: Float
-  param_loadPercent_gt: Float
-  param_loadPercent_gte: Float
   param_condEff: Float
   param_condEff_not: Float
   param_condEff_in: [Float!]
@@ -1242,6 +1230,7 @@ type Load {
   nightUsage: Float!
   usageDays: Float!
   surgeMult: Float!
+  crit: Boolean!
   design: Design!
 }
 
@@ -1260,6 +1249,7 @@ input LoadCreateInput {
   nightUsage: Float!
   usageDays: Float!
   surgeMult: Float!
+  crit: Boolean
   design: DesignCreateOneWithoutLoadsInput!
 }
 
@@ -1277,6 +1267,7 @@ input LoadCreateWithoutDesignInput {
   nightUsage: Float!
   usageDays: Float!
   surgeMult: Float!
+  crit: Boolean
 }
 
 type LoadEdge {
@@ -1301,6 +1292,8 @@ enum LoadOrderByInput {
   usageDays_DESC
   surgeMult_ASC
   surgeMult_DESC
+  crit_ASC
+  crit_DESC
 }
 
 type LoadPreviousValues {
@@ -1312,6 +1305,7 @@ type LoadPreviousValues {
   nightUsage: Float!
   usageDays: Float!
   surgeMult: Float!
+  crit: Boolean!
 }
 
 input LoadScalarWhereInput {
@@ -1391,6 +1385,8 @@ input LoadScalarWhereInput {
   surgeMult_lte: Float
   surgeMult_gt: Float
   surgeMult_gte: Float
+  crit: Boolean
+  crit_not: Boolean
   AND: [LoadScalarWhereInput!]
   OR: [LoadScalarWhereInput!]
   NOT: [LoadScalarWhereInput!]
@@ -1422,6 +1418,7 @@ input LoadUpdateInput {
   nightUsage: Float
   usageDays: Float
   surgeMult: Float
+  crit: Boolean
   design: DesignUpdateOneRequiredWithoutLoadsInput
 }
 
@@ -1433,6 +1430,7 @@ input LoadUpdateManyDataInput {
   nightUsage: Float
   usageDays: Float
   surgeMult: Float
+  crit: Boolean
 }
 
 input LoadUpdateManyMutationInput {
@@ -1443,6 +1441,7 @@ input LoadUpdateManyMutationInput {
   nightUsage: Float
   usageDays: Float
   surgeMult: Float
+  crit: Boolean
 }
 
 input LoadUpdateManyWithoutDesignInput {
@@ -1470,6 +1469,7 @@ input LoadUpdateWithoutDesignDataInput {
   nightUsage: Float
   usageDays: Float
   surgeMult: Float
+  crit: Boolean
 }
 
 input LoadUpdateWithWhereUniqueWithoutDesignInput {
@@ -1560,6 +1560,8 @@ input LoadWhereInput {
   surgeMult_lte: Float
   surgeMult_gt: Float
   surgeMult_gte: Float
+  crit: Boolean
+  crit_not: Boolean
   design: DesignWhereInput
   AND: [LoadWhereInput!]
   OR: [LoadWhereInput!]

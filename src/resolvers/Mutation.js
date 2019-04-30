@@ -97,6 +97,8 @@ const Mutation = {
           phase: args.phase,
           area_roof: args.area_roof,
           area_ground: args.area_ground,
+          batteryBackup: args.batteryBackup,
+          autoHours: args.autoHours,
         }
       }
     );
@@ -159,6 +161,8 @@ const Mutation = {
           phase: args.phase,
           area_roof: args.area_roof,
           area_ground: args.area_ground,
+          batteryBackup: args.batteryBackup,
+          autoHours: args.autoHours,
         },
       }, info
     );

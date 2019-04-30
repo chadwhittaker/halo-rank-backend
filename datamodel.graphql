@@ -49,13 +49,13 @@ type Design {
   phase: String
   area_roof: Int
   area_ground: Int
+  batteryBackup: Boolean @default (value: true)
+  autoHours: Float! @default (value: 4)
   loads: [Load!]!
   dayLoad: Float @default (value: 1)
   nightLoad: Float @default (value: 1)
   fullLoad: Float @default (value: 1)
-  param_autoHours: Float! @default (value: 4)
   param_crit: Boolean! @default (value: false)
-  param_loadPercent: Float! @default (value: 1)
   param_condEff: Float! @default (value: 0.98)
   param_maxDoD: Float! @default (value: 0.5)
   param_maxPowerMarkdown: Float! @default (value: 0.05)
@@ -77,5 +77,6 @@ type Load {
   nightUsage: Float!
   usageDays: Float!
   surgeMult: Float!
+  crit: Boolean! @default (value: true)
   design: Design!
 }
