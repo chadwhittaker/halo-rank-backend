@@ -7,15 +7,6 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
-enum Battery {
-  ADMIN
-  USER
-  DESIGNCREATE
-  DESIGNUPDATE
-  DESIGNDELETE
-  PERMISSIONUPDATE
-}
-
 type User {
   id: ID! @unique @id
   username: String! @unique
@@ -52,20 +43,20 @@ type Design {
   batteryBackup: Boolean @default (value: true)
   autoHours: Float! @default (value: 4)
   loads: [Load!]!
-  dayLoad: Float @default (value: 1)
-  nightLoad: Float @default (value: 1)
-  fullLoad: Float @default (value: 1)
-  param_crit: Boolean! @default (value: false)
+  images: [String] @scalarList(strategy: RELATION)
+  notes: String
   param_condEff: Float! @default (value: 0.98)
   param_maxDoD: Float! @default (value: 0.5)
   param_maxPowerMarkdown: Float! @default (value: 0.05)
-  param_solarEff: Float! @default (value: 0.86)
-  param_surgeMarkup: Float! @default (value: 1.3)
+  param_solarEff: Float! @default (value: 0.86)  
+  dailyLoad: Float @default (value: 1)
   battery: String @default (value: "None selected")
   charger: String @default (value: "None selected")
   inverter: String @default (value: "None selected")
-  cost: Int @default (value: 100)
+  cost: Float @default (value: 1)
   output_pv: Float @default (value: 1)
+  refDesign: Int @default (value: 0)
+  bucket: Int @default (value: 0)
 }
 
 type Load {

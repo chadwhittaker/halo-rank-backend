@@ -11,3 +11,6 @@ datamodel: datamodel.graphql
 generate:
   - generator: graphql-schema
     output: ./src/generated/prisma.graphql
+
+# seed:
+#   import: seed.graphql

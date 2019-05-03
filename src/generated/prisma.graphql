@@ -39,26 +39,30 @@ type Design {
   batteryBackup: Boolean
   autoHours: Float!
   loads(where: LoadWhereInput, orderBy: LoadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Load!]
-  dayLoad: Float
-  nightLoad: Float
-  fullLoad: Float
-  param_crit: Boolean!
+  images: [String!]!
+  notes: String
   param_condEff: Float!
   param_maxDoD: Float!
   param_maxPowerMarkdown: Float!
   param_solarEff: Float!
-  param_surgeMarkup: Float!
+  dailyLoad: Float
   battery: String
   charger: String
   inverter: String
-  cost: Int
+  cost: Float
   output_pv: Float
+  refDesign: Int
+  bucket: Int
 }
 
 type DesignConnection {
   pageInfo: PageInfo!
   edges: [DesignEdge]!
   aggregate: AggregateDesign!
+}
+
+input DesignCreateimagesInput {
+  set: [String!]
 }
 
 input DesignCreateInput {
@@ -82,20 +86,20 @@ input DesignCreateInput {
   batteryBackup: Boolean
   autoHours: Float
   loads: LoadCreateManyWithoutDesignInput
-  dayLoad: Float
-  nightLoad: Float
-  fullLoad: Float
-  param_crit: Boolean
+  images: DesignCreateimagesInput
+  notes: String
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
   param_solarEff: Float
-  param_surgeMarkup: Float
+  dailyLoad: Float
   battery: String
   charger: String
   inverter: String
-  cost: Int
+  cost: Float
   output_pv: Float
+  refDesign: Int
+  bucket: Int
 }
 
 input DesignCreateManyWithoutAuthorInput {
@@ -128,20 +132,20 @@ input DesignCreateWithoutAuthorInput {
   batteryBackup: Boolean
   autoHours: Float
   loads: LoadCreateManyWithoutDesignInput
-  dayLoad: Float
-  nightLoad: Float
-  fullLoad: Float
-  param_crit: Boolean
+  images: DesignCreateimagesInput
+  notes: String
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
   param_solarEff: Float
-  param_surgeMarkup: Float
+  dailyLoad: Float
   battery: String
   charger: String
   inverter: String
-  cost: Int
+  cost: Float
   output_pv: Float
+  refDesign: Int
+  bucket: Int
 }
 
 input DesignCreateWithoutLoadsInput {
@@ -164,20 +168,20 @@ input DesignCreateWithoutLoadsInput {
   area_ground: Int
   batteryBackup: Boolean
   autoHours: Float
-  dayLoad: Float
-  nightLoad: Float
-  fullLoad: Float
-  param_crit: Boolean
+  images: DesignCreateimagesInput
+  notes: String
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
   param_solarEff: Float
-  param_surgeMarkup: Float
+  dailyLoad: Float
   battery: String
   charger: String
   inverter: String
-  cost: Int
+  cost: Float
   output_pv: Float
+  refDesign: Int
+  bucket: Int
 }
 
 type DesignEdge {
@@ -226,14 +230,8 @@ enum DesignOrderByInput {
   batteryBackup_DESC
   autoHours_ASC
   autoHours_DESC
-  dayLoad_ASC
-  dayLoad_DESC
-  nightLoad_ASC
-  nightLoad_DESC
-  fullLoad_ASC
-  fullLoad_DESC
-  param_crit_ASC
-  param_crit_DESC
+  notes_ASC
+  notes_DESC
   param_condEff_ASC
   param_condEff_DESC
   param_maxDoD_ASC
@@ -242,8 +240,8 @@ enum DesignOrderByInput {
   param_maxPowerMarkdown_DESC
   param_solarEff_ASC
   param_solarEff_DESC
-  param_surgeMarkup_ASC
-  param_surgeMarkup_DESC
+  dailyLoad_ASC
+  dailyLoad_DESC
   battery_ASC
   battery_DESC
   charger_ASC
@@ -254,6 +252,10 @@ enum DesignOrderByInput {
   cost_DESC
   output_pv_ASC
   output_pv_DESC
+  refDesign_ASC
+  refDesign_DESC
+  bucket_ASC
+  bucket_DESC
 }
 
 type DesignPreviousValues {
@@ -277,20 +279,20 @@ type DesignPreviousValues {
   area_ground: Int
   batteryBackup: Boolean
   autoHours: Float!
-  dayLoad: Float
-  nightLoad: Float
-  fullLoad: Float
-  param_crit: Boolean!
+  images: [String!]!
+  notes: String
   param_condEff: Float!
   param_maxDoD: Float!
   param_maxPowerMarkdown: Float!
   param_solarEff: Float!
-  param_surgeMarkup: Float!
+  dailyLoad: Float
   battery: String
   charger: String
   inverter: String
-  cost: Int
+  cost: Float
   output_pv: Float
+  refDesign: Int
+  bucket: Int
 }
 
 input DesignScalarWhereInput {
@@ -508,32 +510,20 @@ input DesignScalarWhereInput {
   autoHours_lte: Float
   autoHours_gt: Float
   autoHours_gte: Float
-  dayLoad: Float
-  dayLoad_not: Float
-  dayLoad_in: [Float!]
-  dayLoad_not_in: [Float!]
-  dayLoad_lt: Float
-  dayLoad_lte: Float
-  dayLoad_gt: Float
-  dayLoad_gte: Float
-  nightLoad: Float
-  nightLoad_not: Float
-  nightLoad_in: [Float!]
-  nightLoad_not_in: [Float!]
-  nightLoad_lt: Float
-  nightLoad_lte: Float
-  nightLoad_gt: Float
-  nightLoad_gte: Float
-  fullLoad: Float
-  fullLoad_not: Float
-  fullLoad_in: [Float!]
-  fullLoad_not_in: [Float!]
-  fullLoad_lt: Float
-  fullLoad_lte: Float
-  fullLoad_gt: Float
-  fullLoad_gte: Float
-  param_crit: Boolean
-  param_crit_not: Boolean
+  notes: String
+  notes_not: String
+  notes_in: [String!]
+  notes_not_in: [String!]
+  notes_lt: String
+  notes_lte: String
+  notes_gt: String
+  notes_gte: String
+  notes_contains: String
+  notes_not_contains: String
+  notes_starts_with: String
+  notes_not_starts_with: String
+  notes_ends_with: String
+  notes_not_ends_with: String
   param_condEff: Float
   param_condEff_not: Float
   param_condEff_in: [Float!]
@@ -566,14 +556,14 @@ input DesignScalarWhereInput {
   param_solarEff_lte: Float
   param_solarEff_gt: Float
   param_solarEff_gte: Float
-  param_surgeMarkup: Float
-  param_surgeMarkup_not: Float
-  param_surgeMarkup_in: [Float!]
-  param_surgeMarkup_not_in: [Float!]
-  param_surgeMarkup_lt: Float
-  param_surgeMarkup_lte: Float
-  param_surgeMarkup_gt: Float
-  param_surgeMarkup_gte: Float
+  dailyLoad: Float
+  dailyLoad_not: Float
+  dailyLoad_in: [Float!]
+  dailyLoad_not_in: [Float!]
+  dailyLoad_lt: Float
+  dailyLoad_lte: Float
+  dailyLoad_gt: Float
+  dailyLoad_gte: Float
   battery: String
   battery_not: String
   battery_in: [String!]
@@ -616,14 +606,14 @@ input DesignScalarWhereInput {
   inverter_not_starts_with: String
   inverter_ends_with: String
   inverter_not_ends_with: String
-  cost: Int
-  cost_not: Int
-  cost_in: [Int!]
-  cost_not_in: [Int!]
-  cost_lt: Int
-  cost_lte: Int
-  cost_gt: Int
-  cost_gte: Int
+  cost: Float
+  cost_not: Float
+  cost_in: [Float!]
+  cost_not_in: [Float!]
+  cost_lt: Float
+  cost_lte: Float
+  cost_gt: Float
+  cost_gte: Float
   output_pv: Float
   output_pv_not: Float
   output_pv_in: [Float!]
@@ -632,6 +622,22 @@ input DesignScalarWhereInput {
   output_pv_lte: Float
   output_pv_gt: Float
   output_pv_gte: Float
+  refDesign: Int
+  refDesign_not: Int
+  refDesign_in: [Int!]
+  refDesign_not_in: [Int!]
+  refDesign_lt: Int
+  refDesign_lte: Int
+  refDesign_gt: Int
+  refDesign_gte: Int
+  bucket: Int
+  bucket_not: Int
+  bucket_in: [Int!]
+  bucket_not_in: [Int!]
+  bucket_lt: Int
+  bucket_lte: Int
+  bucket_gt: Int
+  bucket_gte: Int
   AND: [DesignScalarWhereInput!]
   OR: [DesignScalarWhereInput!]
   NOT: [DesignScalarWhereInput!]
@@ -655,6 +661,10 @@ input DesignSubscriptionWhereInput {
   NOT: [DesignSubscriptionWhereInput!]
 }
 
+input DesignUpdateimagesInput {
+  set: [String!]
+}
+
 input DesignUpdateInput {
   modified: Boolean
   author: UserUpdateOneRequiredWithoutDesignsInput
@@ -675,20 +685,20 @@ input DesignUpdateInput {
   batteryBackup: Boolean
   autoHours: Float
   loads: LoadUpdateManyWithoutDesignInput
-  dayLoad: Float
-  nightLoad: Float
-  fullLoad: Float
-  param_crit: Boolean
+  images: DesignUpdateimagesInput
+  notes: String
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
   param_solarEff: Float
-  param_surgeMarkup: Float
+  dailyLoad: Float
   battery: String
   charger: String
   inverter: String
-  cost: Int
+  cost: Float
   output_pv: Float
+  refDesign: Int
+  bucket: Int
 }
 
 input DesignUpdateManyDataInput {
@@ -709,20 +719,20 @@ input DesignUpdateManyDataInput {
   area_ground: Int
   batteryBackup: Boolean
   autoHours: Float
-  dayLoad: Float
-  nightLoad: Float
-  fullLoad: Float
-  param_crit: Boolean
+  images: DesignUpdateimagesInput
+  notes: String
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
   param_solarEff: Float
-  param_surgeMarkup: Float
+  dailyLoad: Float
   battery: String
   charger: String
   inverter: String
-  cost: Int
+  cost: Float
   output_pv: Float
+  refDesign: Int
+  bucket: Int
 }
 
 input DesignUpdateManyMutationInput {
@@ -743,20 +753,20 @@ input DesignUpdateManyMutationInput {
   area_ground: Int
   batteryBackup: Boolean
   autoHours: Float
-  dayLoad: Float
-  nightLoad: Float
-  fullLoad: Float
-  param_crit: Boolean
+  images: DesignUpdateimagesInput
+  notes: String
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
   param_solarEff: Float
-  param_surgeMarkup: Float
+  dailyLoad: Float
   battery: String
   charger: String
   inverter: String
-  cost: Int
+  cost: Float
   output_pv: Float
+  refDesign: Int
+  bucket: Int
 }
 
 input DesignUpdateManyWithoutAuthorInput {
@@ -802,20 +812,20 @@ input DesignUpdateWithoutAuthorDataInput {
   batteryBackup: Boolean
   autoHours: Float
   loads: LoadUpdateManyWithoutDesignInput
-  dayLoad: Float
-  nightLoad: Float
-  fullLoad: Float
-  param_crit: Boolean
+  images: DesignUpdateimagesInput
+  notes: String
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
   param_solarEff: Float
-  param_surgeMarkup: Float
+  dailyLoad: Float
   battery: String
   charger: String
   inverter: String
-  cost: Int
+  cost: Float
   output_pv: Float
+  refDesign: Int
+  bucket: Int
 }
 
 input DesignUpdateWithoutLoadsDataInput {
@@ -837,20 +847,20 @@ input DesignUpdateWithoutLoadsDataInput {
   area_ground: Int
   batteryBackup: Boolean
   autoHours: Float
-  dayLoad: Float
-  nightLoad: Float
-  fullLoad: Float
-  param_crit: Boolean
+  images: DesignUpdateimagesInput
+  notes: String
   param_condEff: Float
   param_maxDoD: Float
   param_maxPowerMarkdown: Float
   param_solarEff: Float
-  param_surgeMarkup: Float
+  dailyLoad: Float
   battery: String
   charger: String
   inverter: String
-  cost: Int
+  cost: Float
   output_pv: Float
+  refDesign: Int
+  bucket: Int
 }
 
 input DesignUpdateWithWhereUniqueWithoutAuthorInput {
@@ -1088,32 +1098,20 @@ input DesignWhereInput {
   loads_every: LoadWhereInput
   loads_some: LoadWhereInput
   loads_none: LoadWhereInput
-  dayLoad: Float
-  dayLoad_not: Float
-  dayLoad_in: [Float!]
-  dayLoad_not_in: [Float!]
-  dayLoad_lt: Float
-  dayLoad_lte: Float
-  dayLoad_gt: Float
-  dayLoad_gte: Float
-  nightLoad: Float
-  nightLoad_not: Float
-  nightLoad_in: [Float!]
-  nightLoad_not_in: [Float!]
-  nightLoad_lt: Float
-  nightLoad_lte: Float
-  nightLoad_gt: Float
-  nightLoad_gte: Float
-  fullLoad: Float
-  fullLoad_not: Float
-  fullLoad_in: [Float!]
-  fullLoad_not_in: [Float!]
-  fullLoad_lt: Float
-  fullLoad_lte: Float
-  fullLoad_gt: Float
-  fullLoad_gte: Float
-  param_crit: Boolean
-  param_crit_not: Boolean
+  notes: String
+  notes_not: String
+  notes_in: [String!]
+  notes_not_in: [String!]
+  notes_lt: String
+  notes_lte: String
+  notes_gt: String
+  notes_gte: String
+  notes_contains: String
+  notes_not_contains: String
+  notes_starts_with: String
+  notes_not_starts_with: String
+  notes_ends_with: String
+  notes_not_ends_with: String
   param_condEff: Float
   param_condEff_not: Float
   param_condEff_in: [Float!]
@@ -1146,14 +1144,14 @@ input DesignWhereInput {
   param_solarEff_lte: Float
   param_solarEff_gt: Float
   param_solarEff_gte: Float
-  param_surgeMarkup: Float
-  param_surgeMarkup_not: Float
-  param_surgeMarkup_in: [Float!]
-  param_surgeMarkup_not_in: [Float!]
-  param_surgeMarkup_lt: Float
-  param_surgeMarkup_lte: Float
-  param_surgeMarkup_gt: Float
-  param_surgeMarkup_gte: Float
+  dailyLoad: Float
+  dailyLoad_not: Float
+  dailyLoad_in: [Float!]
+  dailyLoad_not_in: [Float!]
+  dailyLoad_lt: Float
+  dailyLoad_lte: Float
+  dailyLoad_gt: Float
+  dailyLoad_gte: Float
   battery: String
   battery_not: String
   battery_in: [String!]
@@ -1196,14 +1194,14 @@ input DesignWhereInput {
   inverter_not_starts_with: String
   inverter_ends_with: String
   inverter_not_ends_with: String
-  cost: Int
-  cost_not: Int
-  cost_in: [Int!]
-  cost_not_in: [Int!]
-  cost_lt: Int
-  cost_lte: Int
-  cost_gt: Int
-  cost_gte: Int
+  cost: Float
+  cost_not: Float
+  cost_in: [Float!]
+  cost_not_in: [Float!]
+  cost_lt: Float
+  cost_lte: Float
+  cost_gt: Float
+  cost_gte: Float
   output_pv: Float
   output_pv_not: Float
   output_pv_in: [Float!]
@@ -1212,6 +1210,22 @@ input DesignWhereInput {
   output_pv_lte: Float
   output_pv_gt: Float
   output_pv_gte: Float
+  refDesign: Int
+  refDesign_not: Int
+  refDesign_in: [Int!]
+  refDesign_not_in: [Int!]
+  refDesign_lt: Int
+  refDesign_lte: Int
+  refDesign_gt: Int
+  refDesign_gte: Int
+  bucket: Int
+  bucket_not: Int
+  bucket_in: [Int!]
+  bucket_not_in: [Int!]
+  bucket_lt: Int
+  bucket_lte: Int
+  bucket_gt: Int
+  bucket_gte: Int
   AND: [DesignWhereInput!]
   OR: [DesignWhereInput!]
   NOT: [DesignWhereInput!]

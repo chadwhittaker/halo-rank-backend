@@ -1,6 +1,7 @@
 const { hash, compare } = require('bcrypt')
 const { sign } = require('jsonwebtoken')
 const { APP_SECRET, hasPermission } = require('../utils')
+const { selectParts } = require('../utils/selectParts');
 
 const Mutation = {
 
@@ -69,6 +70,14 @@ const Mutation = {
     // 2. check if he user has permission to do this
     const currentUser = ctx.request.user;
     hasPermission(currentUser, ['ADMIN', 'DESIGNCREATE'])
+
+    // do a quick calculation to select parts so we can store them in database
+    let { inverter, battery, charger, daily_energy_wh, ratedSolarP, cost } = selectParts(args);
+    // do rounding for the table / database
+    daily_energy_wh = Math.round(daily_energy_wh * 10 / 1000) / 10;
+    cost = Math.round(cost * 100) / 100;
+    ratedSolarP = Math.round(ratedSolarP * 10 / 1000) / 10;
+
     // 3. create design in database
     const design = await ctx.db.mutation.createDesign(
       {
@@ -99,6 +108,22 @@ const Mutation = {
           area_ground: args.area_ground,
           batteryBackup: args.batteryBackup,
           autoHours: args.autoHours,
+          images: {
+            set: args.images,
+          },
+          notes: args.notes,
+          // param_condEff: param_condEff,
+          // param_maxDoD: param_maxDoD,
+          // param_maxPowerMarkdown: param_maxPowerMarkdown,
+          // param_solarEff: param_solarEff,
+          dailyLoad: daily_energy_wh,
+          battery: battery.name,
+          charger: charger.name,
+          inverter: inverter.name,
+          cost: cost,
+          output_pv: ratedSolarP,
+          refDesign: inverter.refDesign,
+          bucket: inverter.bucket,
         }
       }
     );
@@ -122,6 +147,9 @@ const Mutation = {
     if (!ownsItem && !hasPermissions) {
       throw new Error("You don't have permission to do that!");
     }
+
+    // RIGHT HERE NEED TO DO MATH AND DETERMINE UPDATED PARTS SELECTION
+
     // 4. create the object to manipulate the loads
     const loadsUpdateObject = async (args) => {
       // if there are no loads incoming on "args"...don't do anything
@@ -163,6 +191,23 @@ const Mutation = {
           area_ground: args.area_ground,
           batteryBackup: args.batteryBackup,
           autoHours: args.autoHours,
+          images: {
+            set: args.images,
+          },
+          notes: args.notes,
+          // param_condEff: param_condEff,
+          // param_maxDoD: param_maxDoD,
+          // param_maxPowerMarkdown: param_maxPowerMarkdown,
+          // param_solarEff: param_solarEff,
+          // dayLoad: dayLoad,
+          // nightLoad: nightLoad,
+          // fullLoad: fullLoad,
+          // battery: battery,
+          // charger: charger,
+          // inverter: inverter,
+          // refDesign: refDesign,
+          // cost: cost,
+          // output_pv: output_pv,
         },
       }, info
     );
@@ -193,39 +238,6 @@ const Mutation = {
     }, info)
     return user;
   }
-
-
-  // login: async (parent, { email, password }, ctx) => {
-  //   const user = await ctx.db.query.user({ email })
-  //   if (!user) {
-  //     throw new Error(`No user found for email: ${email}`)
-  //   }
-  //   const passwordValid = await compare(password, user.password)
-  //   if (!passwordValid) {
-  //     throw new Error('Invalid password')
-  //   }
-  //   return {
-  //     token: sign({ userId: user.id }, APP_SECRET),
-  //     user,
-  //   }
-  // },
-  // createDraft: async (parent, { title, content }, ctx) => {
-  //   const userId = getUserId(ctx)
-  //   return ctx.db.mutation.createPost({
-  //     title,
-  //     content,
-  //     author: { connect: { id: userId } },
-  //   })
-  // },
-  // deletePost: async (parent, { id }, ctx) => {
-  //   return ctx.db.mutation.deletePost({ id })
-  // },
-  // publish: async (parent, { id }, ctx) => {
-  //   return ctx.db.mutation.updatePost({
-  //     where: { id },
-  //     data: { published: true },
-  //   })
-  // },
 }
 
 module.exports = {
