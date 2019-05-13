@@ -1,0 +1,24 @@
+type User {
+  id: ID! @unique @id
+  username: String! @unique
+  password: String!
+  gamertag: String! @unique
+  admin: Boolean! @default (value: false)
+  h2rank: Int! @default (value: 1)
+  h3rank: Int! @default (value: 1)
+  friends: [User]
+  resetToken: String
+  resetTokenExpiry: Float
+  games: [Game]!
+}
+
+type Game {
+  id: ID! @unique @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  author: User!
+  gameType: String!
+  result: String!
+  kills: Int
+  deaths: Int
+}

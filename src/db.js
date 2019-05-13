@@ -3,8 +3,8 @@ const { Prisma } = require('prisma-binding');
 
 const db = new Prisma({
   typeDefs: 'src/generated/prisma.graphql',
-  endpoint: "https://us1.prisma.sh/aeg-solar/aeg-solar-service/dev",
-  secret: "ilovenellyyy",
+  endpoint: process.env.PRISMA_ENDPOINT,
+  secret: process.env.PRISMA_SECRET,
   debug: false,
 });
 

@@ -1,5 +1,3 @@
-const { hasPermission } = require('../utils')
-
 const Query = {
 
   me(parent, args, ctx, info) {
@@ -31,56 +29,24 @@ const Query = {
       throw new Error ('You must be logged in to do that!')
     }
     // 2. check if the user has the permissions to query all users
-    hasPermission(ctx.request.user, ['ADMIN', 'PERMISSIONUPDATE']);
 
     // 3 if they do, query all the users
     return ctx.db.query.users({}, info)
   },
 
-  async designs(parent, args, ctx, info) {
-    return ctx.db.query.designs({}, info)
-  },
+  async games(parent, args, ctx, info) {
 
-  async design(parent, args, ctx, info) {
-    return ctx.db.query.design(
+    const games = await ctx.db.query.games(
       {
-        where: { id: args.id }
-      }, info)
+        where: {
+          author: {
+            id: args.id,
+          }
+        }
+      }, info);
+
+    return games
   }
-
-
-
-
-
-
-
-  // hello: (parent, args, ctx) => {
-  //       return ctx.db.query.users()
-  //     },
-  //   me: (parent, args, ctx) => {
-  //     const userId = getUserId(ctx)
-  //     return ctx.db.query.user({ id: userId })
-  //   },
-  //   feed: (parent, args, ctx) => {
-  //     return ctx.db.query.posts({ where: { published: true } })
-  //   },
-  //   filterPosts: (parent, { searchString }, ctx) => {
-  //     return ctx.db.query.posts({
-  //       where: {
-  //         OR: [
-  //           {
-  //             title_contains: searchString,
-  //           },
-  //           {
-  //             content_contains: searchString,
-  //           },
-  //         ],
-  //       },
-  //     })
-  //   },
-  //   post: (parent, { id }, ctx) => {
-  //     return ctx.db.query.post({ id })
-  //   },
 }
 
 module.exports = {

@@ -1,8 +1,4 @@
-type AggregateDesign {
-  count: Int!
-}
-
-type AggregateLoad {
+type AggregateGame {
   count: Int!
 }
 
@@ -16,286 +12,78 @@ type BatchPayload {
 
 scalar DateTime
 
-type Design {
+type Game {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  modified: Boolean!
   author: User!
-  deanery: String!
-  location: String!
-  parish: String!
-  longitude: Float
-  longitudeDir: String
-  latitude: Float
-  latitudeDir: String
-  gridTied: String
-  generator: String
-  voltage: String
-  freq: String
-  phase: String
-  area_roof: Int
-  area_ground: Int
-  batteryBackup: Boolean
-  autoHours: Float!
-  loads(where: LoadWhereInput, orderBy: LoadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Load!]
-  images: [String!]!
-  notes: String
-  param_condEff: Float!
-  param_maxDoD: Float!
-  param_maxPowerMarkdown: Float!
-  param_solarEff: Float!
-  dailyLoad: Float
-  battery: String
-  charger: String
-  inverter: String
-  cost: Float
-  output_pv: Float
-  refDesign: Int
-  bucket: Int
+  gameType: String!
+  result: String!
+  kills: Int
+  deaths: Int
 }
 
-type DesignConnection {
+type GameConnection {
   pageInfo: PageInfo!
-  edges: [DesignEdge]!
-  aggregate: AggregateDesign!
+  edges: [GameEdge]!
+  aggregate: AggregateGame!
 }
 
-input DesignCreateimagesInput {
-  set: [String!]
-}
-
-input DesignCreateInput {
+input GameCreateInput {
   id: ID
-  modified: Boolean
-  author: UserCreateOneWithoutDesignsInput!
-  deanery: String!
-  location: String!
-  parish: String!
-  longitude: Float
-  longitudeDir: String
-  latitude: Float
-  latitudeDir: String
-  gridTied: String
-  generator: String
-  voltage: String
-  freq: String
-  phase: String
-  area_roof: Int
-  area_ground: Int
-  batteryBackup: Boolean
-  autoHours: Float
-  loads: LoadCreateManyWithoutDesignInput
-  images: DesignCreateimagesInput
-  notes: String
-  param_condEff: Float
-  param_maxDoD: Float
-  param_maxPowerMarkdown: Float
-  param_solarEff: Float
-  dailyLoad: Float
-  battery: String
-  charger: String
-  inverter: String
-  cost: Float
-  output_pv: Float
-  refDesign: Int
-  bucket: Int
+  author: UserCreateOneWithoutGamesInput!
+  gameType: String!
+  result: String!
+  kills: Int
+  deaths: Int
 }
 
-input DesignCreateManyWithoutAuthorInput {
-  create: [DesignCreateWithoutAuthorInput!]
-  connect: [DesignWhereUniqueInput!]
+input GameCreateManyWithoutAuthorInput {
+  create: [GameCreateWithoutAuthorInput!]
+  connect: [GameWhereUniqueInput!]
 }
 
-input DesignCreateOneWithoutLoadsInput {
-  create: DesignCreateWithoutLoadsInput
-  connect: DesignWhereUniqueInput
-}
-
-input DesignCreateWithoutAuthorInput {
+input GameCreateWithoutAuthorInput {
   id: ID
-  modified: Boolean
-  deanery: String!
-  location: String!
-  parish: String!
-  longitude: Float
-  longitudeDir: String
-  latitude: Float
-  latitudeDir: String
-  gridTied: String
-  generator: String
-  voltage: String
-  freq: String
-  phase: String
-  area_roof: Int
-  area_ground: Int
-  batteryBackup: Boolean
-  autoHours: Float
-  loads: LoadCreateManyWithoutDesignInput
-  images: DesignCreateimagesInput
-  notes: String
-  param_condEff: Float
-  param_maxDoD: Float
-  param_maxPowerMarkdown: Float
-  param_solarEff: Float
-  dailyLoad: Float
-  battery: String
-  charger: String
-  inverter: String
-  cost: Float
-  output_pv: Float
-  refDesign: Int
-  bucket: Int
+  gameType: String!
+  result: String!
+  kills: Int
+  deaths: Int
 }
 
-input DesignCreateWithoutLoadsInput {
-  id: ID
-  modified: Boolean
-  author: UserCreateOneWithoutDesignsInput!
-  deanery: String!
-  location: String!
-  parish: String!
-  longitude: Float
-  longitudeDir: String
-  latitude: Float
-  latitudeDir: String
-  gridTied: String
-  generator: String
-  voltage: String
-  freq: String
-  phase: String
-  area_roof: Int
-  area_ground: Int
-  batteryBackup: Boolean
-  autoHours: Float
-  images: DesignCreateimagesInput
-  notes: String
-  param_condEff: Float
-  param_maxDoD: Float
-  param_maxPowerMarkdown: Float
-  param_solarEff: Float
-  dailyLoad: Float
-  battery: String
-  charger: String
-  inverter: String
-  cost: Float
-  output_pv: Float
-  refDesign: Int
-  bucket: Int
-}
-
-type DesignEdge {
-  node: Design!
+type GameEdge {
+  node: Game!
   cursor: String!
 }
 
-enum DesignOrderByInput {
+enum GameOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  modified_ASC
-  modified_DESC
-  deanery_ASC
-  deanery_DESC
-  location_ASC
-  location_DESC
-  parish_ASC
-  parish_DESC
-  longitude_ASC
-  longitude_DESC
-  longitudeDir_ASC
-  longitudeDir_DESC
-  latitude_ASC
-  latitude_DESC
-  latitudeDir_ASC
-  latitudeDir_DESC
-  gridTied_ASC
-  gridTied_DESC
-  generator_ASC
-  generator_DESC
-  voltage_ASC
-  voltage_DESC
-  freq_ASC
-  freq_DESC
-  phase_ASC
-  phase_DESC
-  area_roof_ASC
-  area_roof_DESC
-  area_ground_ASC
-  area_ground_DESC
-  batteryBackup_ASC
-  batteryBackup_DESC
-  autoHours_ASC
-  autoHours_DESC
-  notes_ASC
-  notes_DESC
-  param_condEff_ASC
-  param_condEff_DESC
-  param_maxDoD_ASC
-  param_maxDoD_DESC
-  param_maxPowerMarkdown_ASC
-  param_maxPowerMarkdown_DESC
-  param_solarEff_ASC
-  param_solarEff_DESC
-  dailyLoad_ASC
-  dailyLoad_DESC
-  battery_ASC
-  battery_DESC
-  charger_ASC
-  charger_DESC
-  inverter_ASC
-  inverter_DESC
-  cost_ASC
-  cost_DESC
-  output_pv_ASC
-  output_pv_DESC
-  refDesign_ASC
-  refDesign_DESC
-  bucket_ASC
-  bucket_DESC
+  gameType_ASC
+  gameType_DESC
+  result_ASC
+  result_DESC
+  kills_ASC
+  kills_DESC
+  deaths_ASC
+  deaths_DESC
 }
 
-type DesignPreviousValues {
+type GamePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  modified: Boolean!
-  deanery: String!
-  location: String!
-  parish: String!
-  longitude: Float
-  longitudeDir: String
-  latitude: Float
-  latitudeDir: String
-  gridTied: String
-  generator: String
-  voltage: String
-  freq: String
-  phase: String
-  area_roof: Int
-  area_ground: Int
-  batteryBackup: Boolean
-  autoHours: Float!
-  images: [String!]!
-  notes: String
-  param_condEff: Float!
-  param_maxDoD: Float!
-  param_maxPowerMarkdown: Float!
-  param_solarEff: Float!
-  dailyLoad: Float
-  battery: String
-  charger: String
-  inverter: String
-  cost: Float
-  output_pv: Float
-  refDesign: Int
-  bucket: Int
+  gameType: String!
+  result: String!
+  kills: Int
+  deaths: Int
 }
 
-input DesignScalarWhereInput {
+input GameScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -326,560 +114,131 @@ input DesignScalarWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  modified: Boolean
-  modified_not: Boolean
-  deanery: String
-  deanery_not: String
-  deanery_in: [String!]
-  deanery_not_in: [String!]
-  deanery_lt: String
-  deanery_lte: String
-  deanery_gt: String
-  deanery_gte: String
-  deanery_contains: String
-  deanery_not_contains: String
-  deanery_starts_with: String
-  deanery_not_starts_with: String
-  deanery_ends_with: String
-  deanery_not_ends_with: String
-  location: String
-  location_not: String
-  location_in: [String!]
-  location_not_in: [String!]
-  location_lt: String
-  location_lte: String
-  location_gt: String
-  location_gte: String
-  location_contains: String
-  location_not_contains: String
-  location_starts_with: String
-  location_not_starts_with: String
-  location_ends_with: String
-  location_not_ends_with: String
-  parish: String
-  parish_not: String
-  parish_in: [String!]
-  parish_not_in: [String!]
-  parish_lt: String
-  parish_lte: String
-  parish_gt: String
-  parish_gte: String
-  parish_contains: String
-  parish_not_contains: String
-  parish_starts_with: String
-  parish_not_starts_with: String
-  parish_ends_with: String
-  parish_not_ends_with: String
-  longitude: Float
-  longitude_not: Float
-  longitude_in: [Float!]
-  longitude_not_in: [Float!]
-  longitude_lt: Float
-  longitude_lte: Float
-  longitude_gt: Float
-  longitude_gte: Float
-  longitudeDir: String
-  longitudeDir_not: String
-  longitudeDir_in: [String!]
-  longitudeDir_not_in: [String!]
-  longitudeDir_lt: String
-  longitudeDir_lte: String
-  longitudeDir_gt: String
-  longitudeDir_gte: String
-  longitudeDir_contains: String
-  longitudeDir_not_contains: String
-  longitudeDir_starts_with: String
-  longitudeDir_not_starts_with: String
-  longitudeDir_ends_with: String
-  longitudeDir_not_ends_with: String
-  latitude: Float
-  latitude_not: Float
-  latitude_in: [Float!]
-  latitude_not_in: [Float!]
-  latitude_lt: Float
-  latitude_lte: Float
-  latitude_gt: Float
-  latitude_gte: Float
-  latitudeDir: String
-  latitudeDir_not: String
-  latitudeDir_in: [String!]
-  latitudeDir_not_in: [String!]
-  latitudeDir_lt: String
-  latitudeDir_lte: String
-  latitudeDir_gt: String
-  latitudeDir_gte: String
-  latitudeDir_contains: String
-  latitudeDir_not_contains: String
-  latitudeDir_starts_with: String
-  latitudeDir_not_starts_with: String
-  latitudeDir_ends_with: String
-  latitudeDir_not_ends_with: String
-  gridTied: String
-  gridTied_not: String
-  gridTied_in: [String!]
-  gridTied_not_in: [String!]
-  gridTied_lt: String
-  gridTied_lte: String
-  gridTied_gt: String
-  gridTied_gte: String
-  gridTied_contains: String
-  gridTied_not_contains: String
-  gridTied_starts_with: String
-  gridTied_not_starts_with: String
-  gridTied_ends_with: String
-  gridTied_not_ends_with: String
-  generator: String
-  generator_not: String
-  generator_in: [String!]
-  generator_not_in: [String!]
-  generator_lt: String
-  generator_lte: String
-  generator_gt: String
-  generator_gte: String
-  generator_contains: String
-  generator_not_contains: String
-  generator_starts_with: String
-  generator_not_starts_with: String
-  generator_ends_with: String
-  generator_not_ends_with: String
-  voltage: String
-  voltage_not: String
-  voltage_in: [String!]
-  voltage_not_in: [String!]
-  voltage_lt: String
-  voltage_lte: String
-  voltage_gt: String
-  voltage_gte: String
-  voltage_contains: String
-  voltage_not_contains: String
-  voltage_starts_with: String
-  voltage_not_starts_with: String
-  voltage_ends_with: String
-  voltage_not_ends_with: String
-  freq: String
-  freq_not: String
-  freq_in: [String!]
-  freq_not_in: [String!]
-  freq_lt: String
-  freq_lte: String
-  freq_gt: String
-  freq_gte: String
-  freq_contains: String
-  freq_not_contains: String
-  freq_starts_with: String
-  freq_not_starts_with: String
-  freq_ends_with: String
-  freq_not_ends_with: String
-  phase: String
-  phase_not: String
-  phase_in: [String!]
-  phase_not_in: [String!]
-  phase_lt: String
-  phase_lte: String
-  phase_gt: String
-  phase_gte: String
-  phase_contains: String
-  phase_not_contains: String
-  phase_starts_with: String
-  phase_not_starts_with: String
-  phase_ends_with: String
-  phase_not_ends_with: String
-  area_roof: Int
-  area_roof_not: Int
-  area_roof_in: [Int!]
-  area_roof_not_in: [Int!]
-  area_roof_lt: Int
-  area_roof_lte: Int
-  area_roof_gt: Int
-  area_roof_gte: Int
-  area_ground: Int
-  area_ground_not: Int
-  area_ground_in: [Int!]
-  area_ground_not_in: [Int!]
-  area_ground_lt: Int
-  area_ground_lte: Int
-  area_ground_gt: Int
-  area_ground_gte: Int
-  batteryBackup: Boolean
-  batteryBackup_not: Boolean
-  autoHours: Float
-  autoHours_not: Float
-  autoHours_in: [Float!]
-  autoHours_not_in: [Float!]
-  autoHours_lt: Float
-  autoHours_lte: Float
-  autoHours_gt: Float
-  autoHours_gte: Float
-  notes: String
-  notes_not: String
-  notes_in: [String!]
-  notes_not_in: [String!]
-  notes_lt: String
-  notes_lte: String
-  notes_gt: String
-  notes_gte: String
-  notes_contains: String
-  notes_not_contains: String
-  notes_starts_with: String
-  notes_not_starts_with: String
-  notes_ends_with: String
-  notes_not_ends_with: String
-  param_condEff: Float
-  param_condEff_not: Float
-  param_condEff_in: [Float!]
-  param_condEff_not_in: [Float!]
-  param_condEff_lt: Float
-  param_condEff_lte: Float
-  param_condEff_gt: Float
-  param_condEff_gte: Float
-  param_maxDoD: Float
-  param_maxDoD_not: Float
-  param_maxDoD_in: [Float!]
-  param_maxDoD_not_in: [Float!]
-  param_maxDoD_lt: Float
-  param_maxDoD_lte: Float
-  param_maxDoD_gt: Float
-  param_maxDoD_gte: Float
-  param_maxPowerMarkdown: Float
-  param_maxPowerMarkdown_not: Float
-  param_maxPowerMarkdown_in: [Float!]
-  param_maxPowerMarkdown_not_in: [Float!]
-  param_maxPowerMarkdown_lt: Float
-  param_maxPowerMarkdown_lte: Float
-  param_maxPowerMarkdown_gt: Float
-  param_maxPowerMarkdown_gte: Float
-  param_solarEff: Float
-  param_solarEff_not: Float
-  param_solarEff_in: [Float!]
-  param_solarEff_not_in: [Float!]
-  param_solarEff_lt: Float
-  param_solarEff_lte: Float
-  param_solarEff_gt: Float
-  param_solarEff_gte: Float
-  dailyLoad: Float
-  dailyLoad_not: Float
-  dailyLoad_in: [Float!]
-  dailyLoad_not_in: [Float!]
-  dailyLoad_lt: Float
-  dailyLoad_lte: Float
-  dailyLoad_gt: Float
-  dailyLoad_gte: Float
-  battery: String
-  battery_not: String
-  battery_in: [String!]
-  battery_not_in: [String!]
-  battery_lt: String
-  battery_lte: String
-  battery_gt: String
-  battery_gte: String
-  battery_contains: String
-  battery_not_contains: String
-  battery_starts_with: String
-  battery_not_starts_with: String
-  battery_ends_with: String
-  battery_not_ends_with: String
-  charger: String
-  charger_not: String
-  charger_in: [String!]
-  charger_not_in: [String!]
-  charger_lt: String
-  charger_lte: String
-  charger_gt: String
-  charger_gte: String
-  charger_contains: String
-  charger_not_contains: String
-  charger_starts_with: String
-  charger_not_starts_with: String
-  charger_ends_with: String
-  charger_not_ends_with: String
-  inverter: String
-  inverter_not: String
-  inverter_in: [String!]
-  inverter_not_in: [String!]
-  inverter_lt: String
-  inverter_lte: String
-  inverter_gt: String
-  inverter_gte: String
-  inverter_contains: String
-  inverter_not_contains: String
-  inverter_starts_with: String
-  inverter_not_starts_with: String
-  inverter_ends_with: String
-  inverter_not_ends_with: String
-  cost: Float
-  cost_not: Float
-  cost_in: [Float!]
-  cost_not_in: [Float!]
-  cost_lt: Float
-  cost_lte: Float
-  cost_gt: Float
-  cost_gte: Float
-  output_pv: Float
-  output_pv_not: Float
-  output_pv_in: [Float!]
-  output_pv_not_in: [Float!]
-  output_pv_lt: Float
-  output_pv_lte: Float
-  output_pv_gt: Float
-  output_pv_gte: Float
-  refDesign: Int
-  refDesign_not: Int
-  refDesign_in: [Int!]
-  refDesign_not_in: [Int!]
-  refDesign_lt: Int
-  refDesign_lte: Int
-  refDesign_gt: Int
-  refDesign_gte: Int
-  bucket: Int
-  bucket_not: Int
-  bucket_in: [Int!]
-  bucket_not_in: [Int!]
-  bucket_lt: Int
-  bucket_lte: Int
-  bucket_gt: Int
-  bucket_gte: Int
-  AND: [DesignScalarWhereInput!]
-  OR: [DesignScalarWhereInput!]
-  NOT: [DesignScalarWhereInput!]
+  gameType: String
+  gameType_not: String
+  gameType_in: [String!]
+  gameType_not_in: [String!]
+  gameType_lt: String
+  gameType_lte: String
+  gameType_gt: String
+  gameType_gte: String
+  gameType_contains: String
+  gameType_not_contains: String
+  gameType_starts_with: String
+  gameType_not_starts_with: String
+  gameType_ends_with: String
+  gameType_not_ends_with: String
+  result: String
+  result_not: String
+  result_in: [String!]
+  result_not_in: [String!]
+  result_lt: String
+  result_lte: String
+  result_gt: String
+  result_gte: String
+  result_contains: String
+  result_not_contains: String
+  result_starts_with: String
+  result_not_starts_with: String
+  result_ends_with: String
+  result_not_ends_with: String
+  kills: Int
+  kills_not: Int
+  kills_in: [Int!]
+  kills_not_in: [Int!]
+  kills_lt: Int
+  kills_lte: Int
+  kills_gt: Int
+  kills_gte: Int
+  deaths: Int
+  deaths_not: Int
+  deaths_in: [Int!]
+  deaths_not_in: [Int!]
+  deaths_lt: Int
+  deaths_lte: Int
+  deaths_gt: Int
+  deaths_gte: Int
+  AND: [GameScalarWhereInput!]
+  OR: [GameScalarWhereInput!]
+  NOT: [GameScalarWhereInput!]
 }
 
-type DesignSubscriptionPayload {
+type GameSubscriptionPayload {
   mutation: MutationType!
-  node: Design
+  node: Game
   updatedFields: [String!]
-  previousValues: DesignPreviousValues
+  previousValues: GamePreviousValues
 }
 
-input DesignSubscriptionWhereInput {
+input GameSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: DesignWhereInput
-  AND: [DesignSubscriptionWhereInput!]
-  OR: [DesignSubscriptionWhereInput!]
-  NOT: [DesignSubscriptionWhereInput!]
+  node: GameWhereInput
+  AND: [GameSubscriptionWhereInput!]
+  OR: [GameSubscriptionWhereInput!]
+  NOT: [GameSubscriptionWhereInput!]
 }
 
-input DesignUpdateimagesInput {
-  set: [String!]
+input GameUpdateInput {
+  author: UserUpdateOneRequiredWithoutGamesInput
+  gameType: String
+  result: String
+  kills: Int
+  deaths: Int
 }
 
-input DesignUpdateInput {
-  modified: Boolean
-  author: UserUpdateOneRequiredWithoutDesignsInput
-  deanery: String
-  location: String
-  parish: String
-  longitude: Float
-  longitudeDir: String
-  latitude: Float
-  latitudeDir: String
-  gridTied: String
-  generator: String
-  voltage: String
-  freq: String
-  phase: String
-  area_roof: Int
-  area_ground: Int
-  batteryBackup: Boolean
-  autoHours: Float
-  loads: LoadUpdateManyWithoutDesignInput
-  images: DesignUpdateimagesInput
-  notes: String
-  param_condEff: Float
-  param_maxDoD: Float
-  param_maxPowerMarkdown: Float
-  param_solarEff: Float
-  dailyLoad: Float
-  battery: String
-  charger: String
-  inverter: String
-  cost: Float
-  output_pv: Float
-  refDesign: Int
-  bucket: Int
+input GameUpdateManyDataInput {
+  gameType: String
+  result: String
+  kills: Int
+  deaths: Int
 }
 
-input DesignUpdateManyDataInput {
-  modified: Boolean
-  deanery: String
-  location: String
-  parish: String
-  longitude: Float
-  longitudeDir: String
-  latitude: Float
-  latitudeDir: String
-  gridTied: String
-  generator: String
-  voltage: String
-  freq: String
-  phase: String
-  area_roof: Int
-  area_ground: Int
-  batteryBackup: Boolean
-  autoHours: Float
-  images: DesignUpdateimagesInput
-  notes: String
-  param_condEff: Float
-  param_maxDoD: Float
-  param_maxPowerMarkdown: Float
-  param_solarEff: Float
-  dailyLoad: Float
-  battery: String
-  charger: String
-  inverter: String
-  cost: Float
-  output_pv: Float
-  refDesign: Int
-  bucket: Int
+input GameUpdateManyMutationInput {
+  gameType: String
+  result: String
+  kills: Int
+  deaths: Int
 }
 
-input DesignUpdateManyMutationInput {
-  modified: Boolean
-  deanery: String
-  location: String
-  parish: String
-  longitude: Float
-  longitudeDir: String
-  latitude: Float
-  latitudeDir: String
-  gridTied: String
-  generator: String
-  voltage: String
-  freq: String
-  phase: String
-  area_roof: Int
-  area_ground: Int
-  batteryBackup: Boolean
-  autoHours: Float
-  images: DesignUpdateimagesInput
-  notes: String
-  param_condEff: Float
-  param_maxDoD: Float
-  param_maxPowerMarkdown: Float
-  param_solarEff: Float
-  dailyLoad: Float
-  battery: String
-  charger: String
-  inverter: String
-  cost: Float
-  output_pv: Float
-  refDesign: Int
-  bucket: Int
+input GameUpdateManyWithoutAuthorInput {
+  create: [GameCreateWithoutAuthorInput!]
+  delete: [GameWhereUniqueInput!]
+  connect: [GameWhereUniqueInput!]
+  set: [GameWhereUniqueInput!]
+  disconnect: [GameWhereUniqueInput!]
+  update: [GameUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [GameUpsertWithWhereUniqueWithoutAuthorInput!]
+  deleteMany: [GameScalarWhereInput!]
+  updateMany: [GameUpdateManyWithWhereNestedInput!]
 }
 
-input DesignUpdateManyWithoutAuthorInput {
-  create: [DesignCreateWithoutAuthorInput!]
-  delete: [DesignWhereUniqueInput!]
-  connect: [DesignWhereUniqueInput!]
-  set: [DesignWhereUniqueInput!]
-  disconnect: [DesignWhereUniqueInput!]
-  update: [DesignUpdateWithWhereUniqueWithoutAuthorInput!]
-  upsert: [DesignUpsertWithWhereUniqueWithoutAuthorInput!]
-  deleteMany: [DesignScalarWhereInput!]
-  updateMany: [DesignUpdateManyWithWhereNestedInput!]
+input GameUpdateManyWithWhereNestedInput {
+  where: GameScalarWhereInput!
+  data: GameUpdateManyDataInput!
 }
 
-input DesignUpdateManyWithWhereNestedInput {
-  where: DesignScalarWhereInput!
-  data: DesignUpdateManyDataInput!
+input GameUpdateWithoutAuthorDataInput {
+  gameType: String
+  result: String
+  kills: Int
+  deaths: Int
 }
 
-input DesignUpdateOneRequiredWithoutLoadsInput {
-  create: DesignCreateWithoutLoadsInput
-  update: DesignUpdateWithoutLoadsDataInput
-  upsert: DesignUpsertWithoutLoadsInput
-  connect: DesignWhereUniqueInput
+input GameUpdateWithWhereUniqueWithoutAuthorInput {
+  where: GameWhereUniqueInput!
+  data: GameUpdateWithoutAuthorDataInput!
 }
 
-input DesignUpdateWithoutAuthorDataInput {
-  modified: Boolean
-  deanery: String
-  location: String
-  parish: String
-  longitude: Float
-  longitudeDir: String
-  latitude: Float
-  latitudeDir: String
-  gridTied: String
-  generator: String
-  voltage: String
-  freq: String
-  phase: String
-  area_roof: Int
-  area_ground: Int
-  batteryBackup: Boolean
-  autoHours: Float
-  loads: LoadUpdateManyWithoutDesignInput
-  images: DesignUpdateimagesInput
-  notes: String
-  param_condEff: Float
-  param_maxDoD: Float
-  param_maxPowerMarkdown: Float
-  param_solarEff: Float
-  dailyLoad: Float
-  battery: String
-  charger: String
-  inverter: String
-  cost: Float
-  output_pv: Float
-  refDesign: Int
-  bucket: Int
+input GameUpsertWithWhereUniqueWithoutAuthorInput {
+  where: GameWhereUniqueInput!
+  update: GameUpdateWithoutAuthorDataInput!
+  create: GameCreateWithoutAuthorInput!
 }
 
-input DesignUpdateWithoutLoadsDataInput {
-  modified: Boolean
-  author: UserUpdateOneRequiredWithoutDesignsInput
-  deanery: String
-  location: String
-  parish: String
-  longitude: Float
-  longitudeDir: String
-  latitude: Float
-  latitudeDir: String
-  gridTied: String
-  generator: String
-  voltage: String
-  freq: String
-  phase: String
-  area_roof: Int
-  area_ground: Int
-  batteryBackup: Boolean
-  autoHours: Float
-  images: DesignUpdateimagesInput
-  notes: String
-  param_condEff: Float
-  param_maxDoD: Float
-  param_maxPowerMarkdown: Float
-  param_solarEff: Float
-  dailyLoad: Float
-  battery: String
-  charger: String
-  inverter: String
-  cost: Float
-  output_pv: Float
-  refDesign: Int
-  bucket: Int
-}
-
-input DesignUpdateWithWhereUniqueWithoutAuthorInput {
-  where: DesignWhereUniqueInput!
-  data: DesignUpdateWithoutAuthorDataInput!
-}
-
-input DesignUpsertWithoutLoadsInput {
-  update: DesignUpdateWithoutLoadsDataInput!
-  create: DesignCreateWithoutLoadsInput!
-}
-
-input DesignUpsertWithWhereUniqueWithoutAuthorInput {
-  where: DesignWhereUniqueInput!
-  update: DesignUpdateWithoutAuthorDataInput!
-  create: DesignCreateWithoutAuthorInput!
-}
-
-input DesignWhereInput {
+input GameWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -910,697 +269,69 @@ input DesignWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  modified: Boolean
-  modified_not: Boolean
   author: UserWhereInput
-  deanery: String
-  deanery_not: String
-  deanery_in: [String!]
-  deanery_not_in: [String!]
-  deanery_lt: String
-  deanery_lte: String
-  deanery_gt: String
-  deanery_gte: String
-  deanery_contains: String
-  deanery_not_contains: String
-  deanery_starts_with: String
-  deanery_not_starts_with: String
-  deanery_ends_with: String
-  deanery_not_ends_with: String
-  location: String
-  location_not: String
-  location_in: [String!]
-  location_not_in: [String!]
-  location_lt: String
-  location_lte: String
-  location_gt: String
-  location_gte: String
-  location_contains: String
-  location_not_contains: String
-  location_starts_with: String
-  location_not_starts_with: String
-  location_ends_with: String
-  location_not_ends_with: String
-  parish: String
-  parish_not: String
-  parish_in: [String!]
-  parish_not_in: [String!]
-  parish_lt: String
-  parish_lte: String
-  parish_gt: String
-  parish_gte: String
-  parish_contains: String
-  parish_not_contains: String
-  parish_starts_with: String
-  parish_not_starts_with: String
-  parish_ends_with: String
-  parish_not_ends_with: String
-  longitude: Float
-  longitude_not: Float
-  longitude_in: [Float!]
-  longitude_not_in: [Float!]
-  longitude_lt: Float
-  longitude_lte: Float
-  longitude_gt: Float
-  longitude_gte: Float
-  longitudeDir: String
-  longitudeDir_not: String
-  longitudeDir_in: [String!]
-  longitudeDir_not_in: [String!]
-  longitudeDir_lt: String
-  longitudeDir_lte: String
-  longitudeDir_gt: String
-  longitudeDir_gte: String
-  longitudeDir_contains: String
-  longitudeDir_not_contains: String
-  longitudeDir_starts_with: String
-  longitudeDir_not_starts_with: String
-  longitudeDir_ends_with: String
-  longitudeDir_not_ends_with: String
-  latitude: Float
-  latitude_not: Float
-  latitude_in: [Float!]
-  latitude_not_in: [Float!]
-  latitude_lt: Float
-  latitude_lte: Float
-  latitude_gt: Float
-  latitude_gte: Float
-  latitudeDir: String
-  latitudeDir_not: String
-  latitudeDir_in: [String!]
-  latitudeDir_not_in: [String!]
-  latitudeDir_lt: String
-  latitudeDir_lte: String
-  latitudeDir_gt: String
-  latitudeDir_gte: String
-  latitudeDir_contains: String
-  latitudeDir_not_contains: String
-  latitudeDir_starts_with: String
-  latitudeDir_not_starts_with: String
-  latitudeDir_ends_with: String
-  latitudeDir_not_ends_with: String
-  gridTied: String
-  gridTied_not: String
-  gridTied_in: [String!]
-  gridTied_not_in: [String!]
-  gridTied_lt: String
-  gridTied_lte: String
-  gridTied_gt: String
-  gridTied_gte: String
-  gridTied_contains: String
-  gridTied_not_contains: String
-  gridTied_starts_with: String
-  gridTied_not_starts_with: String
-  gridTied_ends_with: String
-  gridTied_not_ends_with: String
-  generator: String
-  generator_not: String
-  generator_in: [String!]
-  generator_not_in: [String!]
-  generator_lt: String
-  generator_lte: String
-  generator_gt: String
-  generator_gte: String
-  generator_contains: String
-  generator_not_contains: String
-  generator_starts_with: String
-  generator_not_starts_with: String
-  generator_ends_with: String
-  generator_not_ends_with: String
-  voltage: String
-  voltage_not: String
-  voltage_in: [String!]
-  voltage_not_in: [String!]
-  voltage_lt: String
-  voltage_lte: String
-  voltage_gt: String
-  voltage_gte: String
-  voltage_contains: String
-  voltage_not_contains: String
-  voltage_starts_with: String
-  voltage_not_starts_with: String
-  voltage_ends_with: String
-  voltage_not_ends_with: String
-  freq: String
-  freq_not: String
-  freq_in: [String!]
-  freq_not_in: [String!]
-  freq_lt: String
-  freq_lte: String
-  freq_gt: String
-  freq_gte: String
-  freq_contains: String
-  freq_not_contains: String
-  freq_starts_with: String
-  freq_not_starts_with: String
-  freq_ends_with: String
-  freq_not_ends_with: String
-  phase: String
-  phase_not: String
-  phase_in: [String!]
-  phase_not_in: [String!]
-  phase_lt: String
-  phase_lte: String
-  phase_gt: String
-  phase_gte: String
-  phase_contains: String
-  phase_not_contains: String
-  phase_starts_with: String
-  phase_not_starts_with: String
-  phase_ends_with: String
-  phase_not_ends_with: String
-  area_roof: Int
-  area_roof_not: Int
-  area_roof_in: [Int!]
-  area_roof_not_in: [Int!]
-  area_roof_lt: Int
-  area_roof_lte: Int
-  area_roof_gt: Int
-  area_roof_gte: Int
-  area_ground: Int
-  area_ground_not: Int
-  area_ground_in: [Int!]
-  area_ground_not_in: [Int!]
-  area_ground_lt: Int
-  area_ground_lte: Int
-  area_ground_gt: Int
-  area_ground_gte: Int
-  batteryBackup: Boolean
-  batteryBackup_not: Boolean
-  autoHours: Float
-  autoHours_not: Float
-  autoHours_in: [Float!]
-  autoHours_not_in: [Float!]
-  autoHours_lt: Float
-  autoHours_lte: Float
-  autoHours_gt: Float
-  autoHours_gte: Float
-  loads_every: LoadWhereInput
-  loads_some: LoadWhereInput
-  loads_none: LoadWhereInput
-  notes: String
-  notes_not: String
-  notes_in: [String!]
-  notes_not_in: [String!]
-  notes_lt: String
-  notes_lte: String
-  notes_gt: String
-  notes_gte: String
-  notes_contains: String
-  notes_not_contains: String
-  notes_starts_with: String
-  notes_not_starts_with: String
-  notes_ends_with: String
-  notes_not_ends_with: String
-  param_condEff: Float
-  param_condEff_not: Float
-  param_condEff_in: [Float!]
-  param_condEff_not_in: [Float!]
-  param_condEff_lt: Float
-  param_condEff_lte: Float
-  param_condEff_gt: Float
-  param_condEff_gte: Float
-  param_maxDoD: Float
-  param_maxDoD_not: Float
-  param_maxDoD_in: [Float!]
-  param_maxDoD_not_in: [Float!]
-  param_maxDoD_lt: Float
-  param_maxDoD_lte: Float
-  param_maxDoD_gt: Float
-  param_maxDoD_gte: Float
-  param_maxPowerMarkdown: Float
-  param_maxPowerMarkdown_not: Float
-  param_maxPowerMarkdown_in: [Float!]
-  param_maxPowerMarkdown_not_in: [Float!]
-  param_maxPowerMarkdown_lt: Float
-  param_maxPowerMarkdown_lte: Float
-  param_maxPowerMarkdown_gt: Float
-  param_maxPowerMarkdown_gte: Float
-  param_solarEff: Float
-  param_solarEff_not: Float
-  param_solarEff_in: [Float!]
-  param_solarEff_not_in: [Float!]
-  param_solarEff_lt: Float
-  param_solarEff_lte: Float
-  param_solarEff_gt: Float
-  param_solarEff_gte: Float
-  dailyLoad: Float
-  dailyLoad_not: Float
-  dailyLoad_in: [Float!]
-  dailyLoad_not_in: [Float!]
-  dailyLoad_lt: Float
-  dailyLoad_lte: Float
-  dailyLoad_gt: Float
-  dailyLoad_gte: Float
-  battery: String
-  battery_not: String
-  battery_in: [String!]
-  battery_not_in: [String!]
-  battery_lt: String
-  battery_lte: String
-  battery_gt: String
-  battery_gte: String
-  battery_contains: String
-  battery_not_contains: String
-  battery_starts_with: String
-  battery_not_starts_with: String
-  battery_ends_with: String
-  battery_not_ends_with: String
-  charger: String
-  charger_not: String
-  charger_in: [String!]
-  charger_not_in: [String!]
-  charger_lt: String
-  charger_lte: String
-  charger_gt: String
-  charger_gte: String
-  charger_contains: String
-  charger_not_contains: String
-  charger_starts_with: String
-  charger_not_starts_with: String
-  charger_ends_with: String
-  charger_not_ends_with: String
-  inverter: String
-  inverter_not: String
-  inverter_in: [String!]
-  inverter_not_in: [String!]
-  inverter_lt: String
-  inverter_lte: String
-  inverter_gt: String
-  inverter_gte: String
-  inverter_contains: String
-  inverter_not_contains: String
-  inverter_starts_with: String
-  inverter_not_starts_with: String
-  inverter_ends_with: String
-  inverter_not_ends_with: String
-  cost: Float
-  cost_not: Float
-  cost_in: [Float!]
-  cost_not_in: [Float!]
-  cost_lt: Float
-  cost_lte: Float
-  cost_gt: Float
-  cost_gte: Float
-  output_pv: Float
-  output_pv_not: Float
-  output_pv_in: [Float!]
-  output_pv_not_in: [Float!]
-  output_pv_lt: Float
-  output_pv_lte: Float
-  output_pv_gt: Float
-  output_pv_gte: Float
-  refDesign: Int
-  refDesign_not: Int
-  refDesign_in: [Int!]
-  refDesign_not_in: [Int!]
-  refDesign_lt: Int
-  refDesign_lte: Int
-  refDesign_gt: Int
-  refDesign_gte: Int
-  bucket: Int
-  bucket_not: Int
-  bucket_in: [Int!]
-  bucket_not_in: [Int!]
-  bucket_lt: Int
-  bucket_lte: Int
-  bucket_gt: Int
-  bucket_gte: Int
-  AND: [DesignWhereInput!]
-  OR: [DesignWhereInput!]
-  NOT: [DesignWhereInput!]
+  gameType: String
+  gameType_not: String
+  gameType_in: [String!]
+  gameType_not_in: [String!]
+  gameType_lt: String
+  gameType_lte: String
+  gameType_gt: String
+  gameType_gte: String
+  gameType_contains: String
+  gameType_not_contains: String
+  gameType_starts_with: String
+  gameType_not_starts_with: String
+  gameType_ends_with: String
+  gameType_not_ends_with: String
+  result: String
+  result_not: String
+  result_in: [String!]
+  result_not_in: [String!]
+  result_lt: String
+  result_lte: String
+  result_gt: String
+  result_gte: String
+  result_contains: String
+  result_not_contains: String
+  result_starts_with: String
+  result_not_starts_with: String
+  result_ends_with: String
+  result_not_ends_with: String
+  kills: Int
+  kills_not: Int
+  kills_in: [Int!]
+  kills_not_in: [Int!]
+  kills_lt: Int
+  kills_lte: Int
+  kills_gt: Int
+  kills_gte: Int
+  deaths: Int
+  deaths_not: Int
+  deaths_in: [Int!]
+  deaths_not_in: [Int!]
+  deaths_lt: Int
+  deaths_lte: Int
+  deaths_gt: Int
+  deaths_gte: Int
+  AND: [GameWhereInput!]
+  OR: [GameWhereInput!]
+  NOT: [GameWhereInput!]
 }
 
-input DesignWhereUniqueInput {
-  id: ID
-}
-
-type Load {
-  id: ID!
-  name: String
-  quantity: Float!
-  power: Float!
-  dayUsage: Float!
-  nightUsage: Float!
-  usageDays: Float!
-  surgeMult: Float!
-  crit: Boolean!
-  design: Design!
-}
-
-type LoadConnection {
-  pageInfo: PageInfo!
-  edges: [LoadEdge]!
-  aggregate: AggregateLoad!
-}
-
-input LoadCreateInput {
-  id: ID
-  name: String
-  quantity: Float!
-  power: Float!
-  dayUsage: Float!
-  nightUsage: Float!
-  usageDays: Float!
-  surgeMult: Float!
-  crit: Boolean
-  design: DesignCreateOneWithoutLoadsInput!
-}
-
-input LoadCreateManyWithoutDesignInput {
-  create: [LoadCreateWithoutDesignInput!]
-  connect: [LoadWhereUniqueInput!]
-}
-
-input LoadCreateWithoutDesignInput {
-  id: ID
-  name: String
-  quantity: Float!
-  power: Float!
-  dayUsage: Float!
-  nightUsage: Float!
-  usageDays: Float!
-  surgeMult: Float!
-  crit: Boolean
-}
-
-type LoadEdge {
-  node: Load!
-  cursor: String!
-}
-
-enum LoadOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  quantity_ASC
-  quantity_DESC
-  power_ASC
-  power_DESC
-  dayUsage_ASC
-  dayUsage_DESC
-  nightUsage_ASC
-  nightUsage_DESC
-  usageDays_ASC
-  usageDays_DESC
-  surgeMult_ASC
-  surgeMult_DESC
-  crit_ASC
-  crit_DESC
-}
-
-type LoadPreviousValues {
-  id: ID!
-  name: String
-  quantity: Float!
-  power: Float!
-  dayUsage: Float!
-  nightUsage: Float!
-  usageDays: Float!
-  surgeMult: Float!
-  crit: Boolean!
-}
-
-input LoadScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  quantity: Float
-  quantity_not: Float
-  quantity_in: [Float!]
-  quantity_not_in: [Float!]
-  quantity_lt: Float
-  quantity_lte: Float
-  quantity_gt: Float
-  quantity_gte: Float
-  power: Float
-  power_not: Float
-  power_in: [Float!]
-  power_not_in: [Float!]
-  power_lt: Float
-  power_lte: Float
-  power_gt: Float
-  power_gte: Float
-  dayUsage: Float
-  dayUsage_not: Float
-  dayUsage_in: [Float!]
-  dayUsage_not_in: [Float!]
-  dayUsage_lt: Float
-  dayUsage_lte: Float
-  dayUsage_gt: Float
-  dayUsage_gte: Float
-  nightUsage: Float
-  nightUsage_not: Float
-  nightUsage_in: [Float!]
-  nightUsage_not_in: [Float!]
-  nightUsage_lt: Float
-  nightUsage_lte: Float
-  nightUsage_gt: Float
-  nightUsage_gte: Float
-  usageDays: Float
-  usageDays_not: Float
-  usageDays_in: [Float!]
-  usageDays_not_in: [Float!]
-  usageDays_lt: Float
-  usageDays_lte: Float
-  usageDays_gt: Float
-  usageDays_gte: Float
-  surgeMult: Float
-  surgeMult_not: Float
-  surgeMult_in: [Float!]
-  surgeMult_not_in: [Float!]
-  surgeMult_lt: Float
-  surgeMult_lte: Float
-  surgeMult_gt: Float
-  surgeMult_gte: Float
-  crit: Boolean
-  crit_not: Boolean
-  AND: [LoadScalarWhereInput!]
-  OR: [LoadScalarWhereInput!]
-  NOT: [LoadScalarWhereInput!]
-}
-
-type LoadSubscriptionPayload {
-  mutation: MutationType!
-  node: Load
-  updatedFields: [String!]
-  previousValues: LoadPreviousValues
-}
-
-input LoadSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: LoadWhereInput
-  AND: [LoadSubscriptionWhereInput!]
-  OR: [LoadSubscriptionWhereInput!]
-  NOT: [LoadSubscriptionWhereInput!]
-}
-
-input LoadUpdateInput {
-  name: String
-  quantity: Float
-  power: Float
-  dayUsage: Float
-  nightUsage: Float
-  usageDays: Float
-  surgeMult: Float
-  crit: Boolean
-  design: DesignUpdateOneRequiredWithoutLoadsInput
-}
-
-input LoadUpdateManyDataInput {
-  name: String
-  quantity: Float
-  power: Float
-  dayUsage: Float
-  nightUsage: Float
-  usageDays: Float
-  surgeMult: Float
-  crit: Boolean
-}
-
-input LoadUpdateManyMutationInput {
-  name: String
-  quantity: Float
-  power: Float
-  dayUsage: Float
-  nightUsage: Float
-  usageDays: Float
-  surgeMult: Float
-  crit: Boolean
-}
-
-input LoadUpdateManyWithoutDesignInput {
-  create: [LoadCreateWithoutDesignInput!]
-  delete: [LoadWhereUniqueInput!]
-  connect: [LoadWhereUniqueInput!]
-  set: [LoadWhereUniqueInput!]
-  disconnect: [LoadWhereUniqueInput!]
-  update: [LoadUpdateWithWhereUniqueWithoutDesignInput!]
-  upsert: [LoadUpsertWithWhereUniqueWithoutDesignInput!]
-  deleteMany: [LoadScalarWhereInput!]
-  updateMany: [LoadUpdateManyWithWhereNestedInput!]
-}
-
-input LoadUpdateManyWithWhereNestedInput {
-  where: LoadScalarWhereInput!
-  data: LoadUpdateManyDataInput!
-}
-
-input LoadUpdateWithoutDesignDataInput {
-  name: String
-  quantity: Float
-  power: Float
-  dayUsage: Float
-  nightUsage: Float
-  usageDays: Float
-  surgeMult: Float
-  crit: Boolean
-}
-
-input LoadUpdateWithWhereUniqueWithoutDesignInput {
-  where: LoadWhereUniqueInput!
-  data: LoadUpdateWithoutDesignDataInput!
-}
-
-input LoadUpsertWithWhereUniqueWithoutDesignInput {
-  where: LoadWhereUniqueInput!
-  update: LoadUpdateWithoutDesignDataInput!
-  create: LoadCreateWithoutDesignInput!
-}
-
-input LoadWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  quantity: Float
-  quantity_not: Float
-  quantity_in: [Float!]
-  quantity_not_in: [Float!]
-  quantity_lt: Float
-  quantity_lte: Float
-  quantity_gt: Float
-  quantity_gte: Float
-  power: Float
-  power_not: Float
-  power_in: [Float!]
-  power_not_in: [Float!]
-  power_lt: Float
-  power_lte: Float
-  power_gt: Float
-  power_gte: Float
-  dayUsage: Float
-  dayUsage_not: Float
-  dayUsage_in: [Float!]
-  dayUsage_not_in: [Float!]
-  dayUsage_lt: Float
-  dayUsage_lte: Float
-  dayUsage_gt: Float
-  dayUsage_gte: Float
-  nightUsage: Float
-  nightUsage_not: Float
-  nightUsage_in: [Float!]
-  nightUsage_not_in: [Float!]
-  nightUsage_lt: Float
-  nightUsage_lte: Float
-  nightUsage_gt: Float
-  nightUsage_gte: Float
-  usageDays: Float
-  usageDays_not: Float
-  usageDays_in: [Float!]
-  usageDays_not_in: [Float!]
-  usageDays_lt: Float
-  usageDays_lte: Float
-  usageDays_gt: Float
-  usageDays_gte: Float
-  surgeMult: Float
-  surgeMult_not: Float
-  surgeMult_in: [Float!]
-  surgeMult_not_in: [Float!]
-  surgeMult_lt: Float
-  surgeMult_lte: Float
-  surgeMult_gt: Float
-  surgeMult_gte: Float
-  crit: Boolean
-  crit_not: Boolean
-  design: DesignWhereInput
-  AND: [LoadWhereInput!]
-  OR: [LoadWhereInput!]
-  NOT: [LoadWhereInput!]
-}
-
-input LoadWhereUniqueInput {
+input GameWhereUniqueInput {
   id: ID
 }
 
 scalar Long
 
 type Mutation {
-  createDesign(data: DesignCreateInput!): Design!
-  updateDesign(data: DesignUpdateInput!, where: DesignWhereUniqueInput!): Design
-  updateManyDesigns(data: DesignUpdateManyMutationInput!, where: DesignWhereInput): BatchPayload!
-  upsertDesign(where: DesignWhereUniqueInput!, create: DesignCreateInput!, update: DesignUpdateInput!): Design!
-  deleteDesign(where: DesignWhereUniqueInput!): Design
-  deleteManyDesigns(where: DesignWhereInput): BatchPayload!
-  createLoad(data: LoadCreateInput!): Load!
-  updateLoad(data: LoadUpdateInput!, where: LoadWhereUniqueInput!): Load
-  updateManyLoads(data: LoadUpdateManyMutationInput!, where: LoadWhereInput): BatchPayload!
-  upsertLoad(where: LoadWhereUniqueInput!, create: LoadCreateInput!, update: LoadUpdateInput!): Load!
-  deleteLoad(where: LoadWhereUniqueInput!): Load
-  deleteManyLoads(where: LoadWhereInput): BatchPayload!
+  createGame(data: GameCreateInput!): Game!
+  updateGame(data: GameUpdateInput!, where: GameWhereUniqueInput!): Game
+  updateManyGames(data: GameUpdateManyMutationInput!, where: GameWhereInput): BatchPayload!
+  upsertGame(where: GameWhereUniqueInput!, create: GameCreateInput!, update: GameUpdateInput!): Game!
+  deleteGame(where: GameWhereUniqueInput!): Game
+  deleteManyGames(where: GameWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -1626,22 +357,10 @@ type PageInfo {
   endCursor: String
 }
 
-enum Permission {
-  ADMIN
-  USER
-  DESIGNCREATE
-  DESIGNUPDATE
-  DESIGNDELETE
-  PERMISSIONUPDATE
-}
-
 type Query {
-  design(where: DesignWhereUniqueInput!): Design
-  designs(where: DesignWhereInput, orderBy: DesignOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Design]!
-  designsConnection(where: DesignWhereInput, orderBy: DesignOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DesignConnection!
-  load(where: LoadWhereUniqueInput!): Load
-  loads(where: LoadWhereInput, orderBy: LoadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Load]!
-  loadsConnection(where: LoadWhereInput, orderBy: LoadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LoadConnection!
+  game(where: GameWhereUniqueInput!): Game
+  games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game]!
+  gamesConnection(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GameConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -1649,8 +368,7 @@ type Query {
 }
 
 type Subscription {
-  design(where: DesignSubscriptionWhereInput): DesignSubscriptionPayload
-  load(where: LoadSubscriptionWhereInput): LoadSubscriptionPayload
+  game(where: GameSubscriptionWhereInput): GameSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -1658,13 +376,14 @@ type User {
   id: ID!
   username: String!
   password: String!
-  firstName: String!
-  lastName: String
+  gamertag: String!
   admin: Boolean!
+  h2rank: Int!
+  h3rank: Int!
+  friends(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   resetToken: String
   resetTokenExpiry: Float
-  permissions: [Permission!]!
-  designs(where: DesignWhereInput, orderBy: DesignOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Design!]
+  games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game!]
 }
 
 type UserConnection {
@@ -1677,34 +396,37 @@ input UserCreateInput {
   id: ID
   username: String!
   password: String!
-  firstName: String!
-  lastName: String
+  gamertag: String!
   admin: Boolean
+  h2rank: Int
+  h3rank: Int
+  friends: UserCreateManyInput
   resetToken: String
   resetTokenExpiry: Float
-  permissions: UserCreatepermissionsInput
-  designs: DesignCreateManyWithoutAuthorInput
+  games: GameCreateManyWithoutAuthorInput
 }
 
-input UserCreateOneWithoutDesignsInput {
-  create: UserCreateWithoutDesignsInput
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutGamesInput {
+  create: UserCreateWithoutGamesInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreatepermissionsInput {
-  set: [Permission!]
-}
-
-input UserCreateWithoutDesignsInput {
+input UserCreateWithoutGamesInput {
   id: ID
   username: String!
   password: String!
-  firstName: String!
-  lastName: String
+  gamertag: String!
   admin: Boolean
+  h2rank: Int
+  h3rank: Int
+  friends: UserCreateManyInput
   resetToken: String
   resetTokenExpiry: Float
-  permissions: UserCreatepermissionsInput
 }
 
 type UserEdge {
@@ -1719,12 +441,14 @@ enum UserOrderByInput {
   username_DESC
   password_ASC
   password_DESC
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
+  gamertag_ASC
+  gamertag_DESC
   admin_ASC
   admin_DESC
+  h2rank_ASC
+  h2rank_DESC
+  h3rank_ASC
+  h3rank_DESC
   resetToken_ASC
   resetToken_DESC
   resetTokenExpiry_ASC
@@ -1735,12 +459,114 @@ type UserPreviousValues {
   id: ID!
   username: String!
   password: String!
-  firstName: String!
-  lastName: String
+  gamertag: String!
   admin: Boolean!
+  h2rank: Int!
+  h3rank: Int!
   resetToken: String
   resetTokenExpiry: Float
-  permissions: [Permission!]!
+}
+
+input UserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  gamertag: String
+  gamertag_not: String
+  gamertag_in: [String!]
+  gamertag_not_in: [String!]
+  gamertag_lt: String
+  gamertag_lte: String
+  gamertag_gt: String
+  gamertag_gte: String
+  gamertag_contains: String
+  gamertag_not_contains: String
+  gamertag_starts_with: String
+  gamertag_not_starts_with: String
+  gamertag_ends_with: String
+  gamertag_not_ends_with: String
+  admin: Boolean
+  admin_not: Boolean
+  h2rank: Int
+  h2rank_not: Int
+  h2rank_in: [Int!]
+  h2rank_not_in: [Int!]
+  h2rank_lt: Int
+  h2rank_lte: Int
+  h2rank_gt: Int
+  h2rank_gte: Int
+  h3rank: Int
+  h3rank_not: Int
+  h3rank_in: [Int!]
+  h3rank_not_in: [Int!]
+  h3rank_lt: Int
+  h3rank_lte: Int
+  h3rank_gt: Int
+  h3rank_gte: Int
+  resetToken: String
+  resetToken_not: String
+  resetToken_in: [String!]
+  resetToken_not_in: [String!]
+  resetToken_lt: String
+  resetToken_lte: String
+  resetToken_gt: String
+  resetToken_gte: String
+  resetToken_contains: String
+  resetToken_not_contains: String
+  resetToken_starts_with: String
+  resetToken_not_starts_with: String
+  resetToken_ends_with: String
+  resetToken_not_ends_with: String
+  resetTokenExpiry: Float
+  resetTokenExpiry_not: Float
+  resetTokenExpiry_in: [Float!]
+  resetTokenExpiry_not_in: [Float!]
+  resetTokenExpiry_lt: Float
+  resetTokenExpiry_lte: Float
+  resetTokenExpiry_gt: Float
+  resetTokenExpiry_gte: Float
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
 }
 
 type UserSubscriptionPayload {
@@ -1761,54 +587,104 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateDataInput {
+  username: String
+  password: String
+  gamertag: String
+  admin: Boolean
+  h2rank: Int
+  h3rank: Int
+  friends: UserUpdateManyInput
+  resetToken: String
+  resetTokenExpiry: Float
+  games: GameUpdateManyWithoutAuthorInput
+}
+
 input UserUpdateInput {
   username: String
   password: String
-  firstName: String
-  lastName: String
+  gamertag: String
   admin: Boolean
+  h2rank: Int
+  h3rank: Int
+  friends: UserUpdateManyInput
   resetToken: String
   resetTokenExpiry: Float
-  permissions: UserUpdatepermissionsInput
-  designs: DesignUpdateManyWithoutAuthorInput
+  games: GameUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateManyDataInput {
+  username: String
+  password: String
+  gamertag: String
+  admin: Boolean
+  h2rank: Int
+  h3rank: Int
+  resetToken: String
+  resetTokenExpiry: Float
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyMutationInput {
   username: String
   password: String
-  firstName: String
-  lastName: String
+  gamertag: String
   admin: Boolean
+  h2rank: Int
+  h3rank: Int
   resetToken: String
   resetTokenExpiry: Float
-  permissions: UserUpdatepermissionsInput
 }
 
-input UserUpdateOneRequiredWithoutDesignsInput {
-  create: UserCreateWithoutDesignsInput
-  update: UserUpdateWithoutDesignsDataInput
-  upsert: UserUpsertWithoutDesignsInput
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneRequiredWithoutGamesInput {
+  create: UserCreateWithoutGamesInput
+  update: UserUpdateWithoutGamesDataInput
+  upsert: UserUpsertWithoutGamesInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpdatepermissionsInput {
-  set: [Permission!]
-}
-
-input UserUpdateWithoutDesignsDataInput {
+input UserUpdateWithoutGamesDataInput {
   username: String
   password: String
-  firstName: String
-  lastName: String
+  gamertag: String
   admin: Boolean
+  h2rank: Int
+  h3rank: Int
+  friends: UserUpdateManyInput
   resetToken: String
   resetTokenExpiry: Float
-  permissions: UserUpdatepermissionsInput
 }
 
-input UserUpsertWithoutDesignsInput {
-  update: UserUpdateWithoutDesignsDataInput!
-  create: UserCreateWithoutDesignsInput!
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
+input UserUpsertWithoutGamesInput {
+  update: UserUpdateWithoutGamesDataInput!
+  create: UserCreateWithoutGamesInput!
+}
+
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -1854,36 +730,41 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  firstName: String
-  firstName_not: String
-  firstName_in: [String!]
-  firstName_not_in: [String!]
-  firstName_lt: String
-  firstName_lte: String
-  firstName_gt: String
-  firstName_gte: String
-  firstName_contains: String
-  firstName_not_contains: String
-  firstName_starts_with: String
-  firstName_not_starts_with: String
-  firstName_ends_with: String
-  firstName_not_ends_with: String
-  lastName: String
-  lastName_not: String
-  lastName_in: [String!]
-  lastName_not_in: [String!]
-  lastName_lt: String
-  lastName_lte: String
-  lastName_gt: String
-  lastName_gte: String
-  lastName_contains: String
-  lastName_not_contains: String
-  lastName_starts_with: String
-  lastName_not_starts_with: String
-  lastName_ends_with: String
-  lastName_not_ends_with: String
+  gamertag: String
+  gamertag_not: String
+  gamertag_in: [String!]
+  gamertag_not_in: [String!]
+  gamertag_lt: String
+  gamertag_lte: String
+  gamertag_gt: String
+  gamertag_gte: String
+  gamertag_contains: String
+  gamertag_not_contains: String
+  gamertag_starts_with: String
+  gamertag_not_starts_with: String
+  gamertag_ends_with: String
+  gamertag_not_ends_with: String
   admin: Boolean
   admin_not: Boolean
+  h2rank: Int
+  h2rank_not: Int
+  h2rank_in: [Int!]
+  h2rank_not_in: [Int!]
+  h2rank_lt: Int
+  h2rank_lte: Int
+  h2rank_gt: Int
+  h2rank_gte: Int
+  h3rank: Int
+  h3rank_not: Int
+  h3rank_in: [Int!]
+  h3rank_not_in: [Int!]
+  h3rank_lt: Int
+  h3rank_lte: Int
+  h3rank_gt: Int
+  h3rank_gte: Int
+  friends_every: UserWhereInput
+  friends_some: UserWhereInput
+  friends_none: UserWhereInput
   resetToken: String
   resetToken_not: String
   resetToken_in: [String!]
@@ -1906,9 +787,9 @@ input UserWhereInput {
   resetTokenExpiry_lte: Float
   resetTokenExpiry_gt: Float
   resetTokenExpiry_gte: Float
-  designs_every: DesignWhereInput
-  designs_some: DesignWhereInput
-  designs_none: DesignWhereInput
+  games_every: GameWhereInput
+  games_some: GameWhereInput
+  games_none: GameWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -1917,4 +798,5 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   username: String
+  gamertag: String
 }

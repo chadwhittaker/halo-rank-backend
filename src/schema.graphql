@@ -6,72 +6,16 @@ scalar DateTime
 
 type Query {
   me: User
-  user(id: ID, username: String): User
+  user(id: ID): User
   users: [User]!
-  designs: [Design]!
-  design(id: ID): Design
-
-  # me: User
-  # feed: [Post!]!
-  # filterPosts(searchString: String): [Post!]!
-  # post(id: ID!): Post
+  games(id: ID!): [Game]!
 }
 
 type Mutation {
-  signup(username: String!, password: String!, firstName: String!, lastName: String): User!
+  signup(username: String!, password: String!, gamertag: String!): User!
   login(username: String!, password: String!): User!
   logout: SuccessMessage
-  createDesign(
-    deanery: String!, 
-    location: String!, 
-    parish: String!,
-    longitude: Float,
-    longitudeDir: String,
-    latitude: Float,
-    latitudeDir: String,
-    gridTied: String,
-    generator: String,
-    voltage: String,
-    freq: String,
-    phase: String,
-    area_roof: Int,
-    area_ground: Int,
-    batteryBackup: Boolean!,
-    autoHours: Float,
-    loads: [LoadCreateWithoutDesignInput!]!,
-    images: [String],
-    notes: String,
-  ): Design!
-  updateDesign(
-    id: ID!,
-    deanery: String,
-    location: String, 
-    parish: String,
-    longitude: Float,
-    longitudeDir: String,
-    latitude: Float,
-    latitudeDir: String,
-    gridTied: String,
-    generator: String,
-    voltage: String,
-    freq: String,
-    phase: String,
-    area_roof: Int,
-    area_ground: Int,
-    batteryBackup: Boolean,
-    autoHours: Float,
-    loads: [LoadCreateWithoutDesignInput],
-    images: [String],
-    notes: String,
-  ): Design!
-  updatePermissions(permissions: [Permission], userId: ID!): User
-
-  # hello: String
-  # createDraft(title: String!, content: String): Post!
-  # deletePost(id: ID!): Post
-  # publish(id: ID!): Post
-  # signup(email: String!, password: String!, name: String): AuthPayload!
-  # login(email: String!, password: String!): AuthPayload!
+  createGame(gameType: String!, result: String!, kills: Int, deaths: Int): Game!
 }
 
 type SuccessMessage {

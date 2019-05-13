@@ -1,16 +1,7 @@
-# Specifies the HTTP endpoint of your Prisma API.
-endpoint: "https://us1.prisma.sh/aeg-solar/aeg-solar-service/dev"
-
-# UNCOMMEND BELOW FOR PRODUCTION
-# secret: ${env:PRISMA_SECRET}
-
-# Defines your models, each model is mapped to the database as a table.
-datamodel: datamodel.graphql
-
-# Specifies the language and directory for the generated Prisma client.
+# endpoint: https://halo-prisma-server-43444630d9.herokuapp.com/halo-dev-service/dev
+endpoint: ${env:PRISMA_ENDPOINT}
+datamodel: datamodel.prisma
+secret: ${env:PRISMA_SECRET}
 generate:
   - generator: graphql-schema
     output: ./src/generated/prisma.graphql
-
-# seed:
-#   import: seed.graphql

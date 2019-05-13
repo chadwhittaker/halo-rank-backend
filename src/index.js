@@ -1,5 +1,5 @@
 // require('dotenv').config({ path: 'variables.env' });  // not currently using these env variables
-const { APP_SECRET } = require('./utils');
+// const { APP_SECRET } = require('./utils');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const { GraphQLServer } = require('graphql-yoga');
@@ -37,7 +37,7 @@ server.express.use((req, res, next) => {
   // grab the token from cookies
   const { token } = req.cookies;
   if(token) {
-    const { userId } = jwt.verify(token, APP_SECRET);
+    const { userId } = jwt.verify(token, process.env.APP_SECRET);
     // put the decoded userId onto the req for future requests to access
     req.userId = userId;
   }
@@ -50,8 +50,9 @@ server.express.use(async (req, res, next) => {
   if (!req.userId) return next();
   const user = await db.query.user(
     { where: { id: req.userId } },
-    '{ id, username, permissions }'
+    '{ id, username }'
   );
+
   req.user = user;
   next();
 });
@@ -61,10 +62,10 @@ server.start(
   {
     cors: {
       credentials: true,                  // need these two lines to endable token / cookie
-      origin: "http://localhost:3000",    // frontend domain, only allows credentials from here?
+      origin: process.env.FRONTEND_URL,    // frontend domain, only allows credentials from here?
     },
   },
   deets => {
-    console.log(`Server is now running on port http://localhost:${deets.port}`);
+    console.log(`Server is now running on... ${deets.port}`);
   }
 );
