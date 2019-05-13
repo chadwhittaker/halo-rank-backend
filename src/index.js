@@ -22,7 +22,7 @@ const server = new GraphQLServer({
   },
 })
 
-// DEFINE MIDDLEWARES // a middleware will run in the MIDDLE...between your request and your response //
+// DEFINE MIDDLEWARES // a middleware will run in the MIDDLE...between your request and your response ///
 // server.express.use((req, res, next) => {
 //   // req - request from client
 //   // res - response from server
