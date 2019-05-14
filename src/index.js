@@ -36,7 +36,7 @@ server.express.use(cookieParser());       // gives us handy little methods like 
 server.express.use((req, res, next) => {
   // grab the token from cookies
   console.log("req", req)
-  console.log("cookies", req,cookies)
+  console.log("cookies", req.cookies)
   const { token } = req.cookies;
   console.log("token", token)
 
