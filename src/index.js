@@ -63,12 +63,12 @@ server.express.use(async (req, res, next) => {
 
 
 server.start(
-  {
-    cors: {
-      credentials: true,                  // need these two lines to endable token / cookie
-      origin: process.env.FRONTEND_URL,    // frontend domain, only allows credentials from here??
-    },
-  },
+  // {
+  //   cors: {
+  //     credentials: true,                  // need these two lines to endable token / cookie
+  //     origin: process.env.FRONTEND_URL,    // frontend domain, only allows credentials from here??
+  //   },
+  // },
   deets => {
     console.log(`Server is now running on port http://localhost:${deets.port}`);
   }
