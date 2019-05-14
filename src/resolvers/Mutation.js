@@ -44,13 +44,17 @@ const Mutation = {
       throw new Error('Invalid password')
     }
     // 3. generate the JWT token
+    console.log("app_secret!", process.env.APP_SECRET)
     const token = sign({ userId: user.id }, process.env.APP_SECRET);
+    
+    console.log("logintoken", token)
     // 4. set the cookie with the token
     ctx.response.cookie('token', token, {
       // makes it so token only accessible via http request...not javascript (safety thing)
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie (will stay signed in for this long)
     });
+    console.log("ctx-response-cookie!", ctx.response.cookie)
     // 5. return the user
     return user;
   },
