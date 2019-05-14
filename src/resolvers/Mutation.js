@@ -54,7 +54,7 @@ const Mutation = {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie (will stay signed in for this long)
     });
-    console.log("ctx-response-cookie!", ctx.response.cookie)
+    console.log("ctx-response!", ctx.response)
     // 5. return the user
     return user;
   },
