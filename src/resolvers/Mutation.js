@@ -36,7 +36,7 @@ const Mutation = {
     // change username to lowercase
     const usernameLower = username.toLowerCase();
     // 1. check if there is a user with that username
-    const user = await ctx.db.query.user({ where: { usernameLower } })
+    const user = await ctx.db.query.user({ where: { username: usernameLower } })
     if (!user) {
       throw new Error(`No user found for username: ${username}`)
     }
