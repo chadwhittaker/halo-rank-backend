@@ -66,7 +66,7 @@ server.start(
   {
     cors: {
       credentials: true,                  // need these two lines to endable token / cookie
-      origin: process.env.FRONTEND_URL,    // frontend domain, only allows credentials from here??
+      origin: [process.env.FRONTEND_URL, process.env.FRONTEND_URL2, process.env.FRONTEND_URL3],    // frontend domain, only allows credentials from here??
     },
   },
   deets => {
