@@ -33,8 +33,10 @@ const Mutation = {
   },
 
   async login(parent, { username, password }, ctx) {
+    // change username to lowercase
+    const usernameLower = username.toLowerCase();
     // 1. check if there is a user with that username
-    const user = await ctx.db.query.user({ where: { username } })
+    const user = await ctx.db.query.user({ where: { usernameLower } })
     if (!user) {
       throw new Error(`No user found for username: ${username}`)
     }
