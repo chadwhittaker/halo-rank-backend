@@ -4,6 +4,7 @@ const Query = {
     // check if their is a current userId on the request (remember...we added the decoded userId in middleware)
     if (!ctx.request.userId) {
       // don't throw an error, just return nothing. It's ok not to be logged in
+      console.log("returning null!!!")
       return null;
     }
     // if there is a userId on the request...query it in the database and return to client

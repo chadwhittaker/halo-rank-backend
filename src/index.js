@@ -35,9 +35,14 @@ server.express.use(cookieParser());       // gives us handy little methods like 
 // middleware to decode the JWT so we can get the User Id on each request
 server.express.use((req, res, next) => {
   // grab the token from cookies
+  console.log("req", req)
+  console.log("cookies", req,cookies)
   const { token } = req.cookies;
+  console.log("token", token)
+
   if(token) {
     const { userId } = jwt.verify(token, process.env.APP_SECRET);
+    console.log("userId", userId)
     // put the decoded userId onto the req for future requests to access
     req.userId = userId;
   }
@@ -62,10 +67,10 @@ server.start(
   {
     cors: {
       credentials: true,                  // need these two lines to endable token / cookie
-      origin: process.env.FRONTEND_URL,    // frontend domain, only allows credentials from here?
+      origin: process.env.FRONTEND_URL,    // frontend domain, only allows credentials from here??
     },
   },
   deets => {
-    console.log(`Server is now running on... ${deets.port}`);
+    console.log(`Server is now running on port http://localhost:${deets.port}`);
   }
 );
