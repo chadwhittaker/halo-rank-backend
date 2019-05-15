@@ -58,11 +58,11 @@ server.express.use(async (req, res, next) => {
   next();
 });
 
-console.log("FRONTEND_URL",process.env.FRONTEND_URL)
-console.log("PRISMA_ENDPOINT",process.env.PRISMA_ENDPOINT)
-console.log("PRISMA_SECRET",process.env.PRISMA_SECRET)
-console.log("APP_SECRET",process.env.APP_SECRET)
-console.log("NODE_ENV",process.env.NODE_ENV)
+// console.log("FRONTEND_URL",process.env.FRONTEND_URL)
+// console.log("PRISMA_ENDPOINT",process.env.PRISMA_ENDPOINT)
+// console.log("PRISMA_SECRET",process.env.PRISMA_SECRET)
+// console.log("APP_SECRET",process.env.APP_SECRET)
+// console.log("NODE_ENV",process.env.NODE_ENV)
 
 server.start(
   {
